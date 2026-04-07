@@ -6,14 +6,18 @@
   <title>Our Year in Memories</title>
   <style>
     :root {
-      --bg: #211a2e;
-      --panel: rgba(255, 246, 251, 0.16);
-      --panel-strong: rgba(255, 241, 248, 0.2);
-      --text: #fff8fc;
-      --muted: #f0dce8;
-      --accent: #ffd6e7;
-      --shadow: 0 12px 34px rgba(45, 23, 54, 0.28);
-      --radius: 20px;
+      --bg-1: #7f688f;
+      --bg-2: #5b476f;
+      --bg-3: #392d4e;
+      --bg-4: #241c34;
+      --panel: rgba(255, 246, 251, 0.14);
+      --panel-border: rgba(255, 240, 247, 0.22);
+      --text: #fff7fb;
+      --muted: #f0ddea;
+      --accent: #ffdce9;
+      --accent-strong: #f7c4da;
+      --shadow: 0 14px 34px rgba(40, 19, 52, 0.26);
+      --radius: 22px;
       --max-width: 1100px;
     }
 
@@ -28,12 +32,13 @@
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      background:
-        radial-gradient(circle at top, rgba(255, 218, 236, 0.34), transparent 34%),
-        radial-gradient(circle at 20% 20%, rgba(196, 172, 255, 0.18), transparent 25%),
-        linear-gradient(180deg, #6f577f 0%, #49385f 26%, #332746 52%, #241d33 100%);
       color: var(--text);
       overflow-x: hidden;
+      background:
+        radial-gradient(circle at top, rgba(255, 214, 230, 0.34), transparent 30%),
+        radial-gradient(circle at 15% 18%, rgba(219, 204, 255, 0.22), transparent 22%),
+        radial-gradient(circle at 80% 12%, rgba(255, 239, 246, 0.12), transparent 18%),
+        linear-gradient(180deg, var(--bg-1) 0%, var(--bg-2) 24%, var(--bg-3) 56%, var(--bg-4) 100%);
     }
 
     body::before {
@@ -41,11 +46,11 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      background:
-        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.08), transparent 18%),
-        radial-gradient(circle at 80% 15%, rgba(255,232,244,0.08), transparent 16%),
-        radial-gradient(circle at 70% 75%, rgba(214,194,255,0.06), transparent 18%);
       z-index: 0;
+      background:
+        radial-gradient(circle at 10% 26%, rgba(255,255,255,0.08), transparent 16%),
+        radial-gradient(circle at 85% 18%, rgba(255,232,244,0.07), transparent 14%),
+        radial-gradient(circle at 75% 76%, rgba(222,207,255,0.06), transparent 18%);
     }
 
     .hero {
@@ -58,7 +63,7 @@
       position: relative;
       z-index: 1;
       background:
-        linear-gradient(rgba(62, 52, 84, 0.22), rgba(22, 21, 34, 0.35)),
+        linear-gradient(rgba(49, 32, 63, 0.28), rgba(23, 19, 36, 0.45)),
         url("assets/photos/hero.jpg") center/cover no-repeat;
     }
 
@@ -66,52 +71,51 @@
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(180deg, rgba(24, 19, 36, 0.15) 0%, rgba(17, 18, 32, 0.55) 100%);
+      background: linear-gradient(180deg, rgba(26, 22, 39, 0.14) 0%, rgba(28, 21, 39, 0.58) 100%);
       z-index: -1;
     }
 
     .hero-card {
       width: min(760px, 100%);
       padding: 42px 28px;
-      border-radius: 28px;
-      background: rgba(12, 14, 18, 0.62);
-      border: 1px solid rgba(255,255,255,0.12);
-      backdrop-filter: blur(10px);
+      border-radius: 30px;
+      background: rgba(50, 33, 63, 0.34);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(12px);
       box-shadow: var(--shadow);
     }
 
     .hero h1 {
-      font-size: clamp(2.4rem, 6vw, 4.8rem);
+      font-size: clamp(2.5rem, 6vw, 4.9rem);
       margin: 0 0 10px;
       line-height: 1.05;
       letter-spacing: 0.02em;
+      text-shadow: 0 2px 18px rgba(0,0,0,0.22);
     }
 
     .hero p {
       margin: 10px auto 0;
-      max-width: 600px;
+      max-width: 620px;
       color: var(--muted);
       font-size: clamp(1rem, 2vw, 1.15rem);
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     .hero-actions {
       margin-top: 28px;
       display: flex;
-      gap: 14px;
       justify-content: center;
-      flex-wrap: wrap;
     }
 
     .btn {
       appearance: none;
       border: none;
       border-radius: 999px;
-      padding: 14px 26px;
+      padding: 14px 28px;
       font: inherit;
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 10px 22px rgba(70, 34, 72, 0.18);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+      box-shadow: 0 12px 26px rgba(62, 27, 63, 0.22);
     }
 
     .btn:hover {
@@ -119,25 +123,15 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #ffe6ef, #f8c9dd);
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
       color: #5b304c;
       font-weight: 700;
     }
 
-    .btn-primary:hover {
-      box-shadow: 0 14px 28px rgba(81, 41, 78, 0.24);
-    }
-
-    .btn-secondary {
-      background: rgba(255,255,255,0.08);
-      color: var(--text);
-      border: 1px solid rgba(255,255,255,0.12);
-    }
-
     .music-note {
       margin-top: 14px;
-      color: #dfd8ce;
-      opacity: 0.85;
+      color: #f7e8f0;
+      opacity: 0.92;
       font-size: 0.95rem;
     }
 
@@ -146,7 +140,7 @@
       z-index: 1;
       width: min(var(--max-width), calc(100% - 28px));
       margin: 0 auto;
-      padding: 40px 0 100px;
+      padding: 56px 0 100px;
     }
 
     .timeline::before {
@@ -156,7 +150,7 @@
       top: 0;
       bottom: 0;
       width: 2px;
-      background: linear-gradient(180deg, transparent, rgba(255,255,255,0.25), transparent);
+      background: linear-gradient(180deg, transparent, rgba(255,255,255,0.34), transparent);
     }
 
     .section {
@@ -174,16 +168,16 @@
       height: 18px;
       border-radius: 50%;
       background: var(--accent);
-      box-shadow: 0 0 0 7px rgba(227, 202, 165, 0.18);
+      box-shadow: 0 0 0 7px rgba(255, 214, 231, 0.18);
     }
 
     .section-card {
       background: var(--panel);
-      border: 1px solid rgba(255,255,255,0.12);
+      border: 1px solid var(--panel-border);
       border-radius: var(--radius);
       padding: 24px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     .section-header {
@@ -195,7 +189,7 @@
       letter-spacing: 0.14em;
       text-transform: uppercase;
       color: var(--accent);
-      opacity: 0.95;
+      opacity: 0.96;
       margin-bottom: 8px;
     }
 
@@ -223,8 +217,8 @@
 
     .memory {
       grid-column: span 6;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
       border-radius: 18px;
       overflow: hidden;
       min-height: 280px;
@@ -240,25 +234,26 @@
       min-height: 420px;
     }
 
+    .media-wrap {
+      position: relative;
+      flex: 1;
+      min-height: 240px;
+      background: rgba(18, 13, 24, 0.55);
+    }
+
     .memory img,
     .memory video {
       width: 100%;
       height: 100%;
       display: block;
       object-fit: cover;
-      background: #090a0d;
-    }
-
-    .media-wrap {
-      position: relative;
-      flex: 1;
-      min-height: 240px;
+      background: #120f18;
     }
 
     .caption {
       padding: 14px 16px 16px;
-      color: #f3ede4;
-      background: rgba(6, 7, 10, 0.42);
+      color: #fff7fb;
+      background: rgba(24, 16, 30, 0.34);
       font-size: 0.98rem;
       line-height: 1.6;
     }
@@ -268,19 +263,20 @@
       margin: 10px auto 70px;
       padding: 34px 24px;
       border-radius: 26px;
-      background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.04));
-      border: 1px solid rgba(255,255,255,0.1);
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+      border: 1px solid rgba(255,255,255,0.14);
       box-shadow: var(--shadow);
       position: relative;
       z-index: 1;
       text-align: center;
+      backdrop-filter: blur(8px);
     }
 
     .quote-break blockquote {
       margin: 0;
       font-size: clamp(1.4rem, 3vw, 2.2rem);
       line-height: 1.5;
-      color: #f7f0e8;
+      color: #fff7fb;
     }
 
     .quote-break span {
@@ -302,8 +298,8 @@
     .reflection-card {
       border-radius: 28px;
       padding: 28px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.15);
       box-shadow: var(--shadow);
       backdrop-filter: blur(10px);
     }
@@ -333,14 +329,14 @@
 
     label {
       font-weight: 700;
-      color: #f4eee6;
+      color: #fff7fb;
     }
 
     input,
     textarea {
       width: 100%;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(9, 10, 14, 0.65);
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(29, 20, 36, 0.5);
       color: var(--text);
       border-radius: 16px;
       padding: 14px 16px;
@@ -351,7 +347,7 @@
 
     input:focus,
     textarea:focus {
-      border-color: rgba(227, 202, 165, 0.9);
+      border-color: rgba(255, 220, 233, 0.95);
       transform: translateY(-1px);
     }
 
@@ -370,7 +366,7 @@
     .footer {
       text-align: center;
       padding: 10px 20px 50px;
-      color: rgba(255,255,255,0.72);
+      color: rgba(255,255,255,0.78);
       position: relative;
       z-index: 1;
     }
@@ -435,8 +431,6 @@
     1) your Google Apps Script web app URL, or
     2) a Formspree endpoint, or
     3) any backend endpoint you create
-
-    If you do not set it yet, the site will still open and the form will just stay local.
   -->
 
   <audio id="bgMusic" loop preload="auto">
@@ -451,7 +445,7 @@
         The big ones. The dumb ones. The blurry ones. The ones worth keeping.
       </p>
       <div class="hero-actions">
-        <button class="btn btn-primary" id="startExperienceBtn">Begin</button>
+        <button class="btn btn-primary" id="startExperienceBtn" type="button">Begin</button>
       </div>
       <div class="music-note">Best experienced with sound on.</div>
     </div>
@@ -669,14 +663,14 @@
 
     const bgMusic = document.getElementById("bgMusic");
     const startExperienceBtn = document.getElementById("startExperienceBtn");
+    const memoriesSection = document.getElementById("memories");
     const videos = document.querySelectorAll("video");
     const revealItems = document.querySelectorAll(".reveal");
     const form = document.getElementById("memoryForm");
     const formStatus = document.getElementById("formStatus");
 
     let musicStarted = false;
-    let userVolume = 0.65;
-
+    const userVolume = 0.65;
     bgMusic.volume = userVolume;
 
     async function startMusic() {
@@ -689,18 +683,10 @@
       }
     }
 
-    startExperienceBtn.addEventListener("click", async () => {
+    startExperienceBtn.addEventListener("click", async function () {
       await startMusic();
-      window.location.hash = "memories";
-      document.getElementById("memories").scrollIntoView({ behavior: "smooth", block: "start" });
+      memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
     });
-    });
-
-    document.addEventListener("click", async () => {
-      if (!musicStarted) {
-        await startMusic();
-      }
-    }, { once: true });
 
     function fadeMusic(targetVolume, duration = 400) {
       const startVolume = bgMusic.volume;
