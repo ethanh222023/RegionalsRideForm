@@ -211,11 +211,23 @@
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 16px;
-      margin-top: 22px;
+      gap: 22px;
+      margin-top: 26px;
+      align-items: start;
     }
 
     .memory {
+      grid-column: span 6;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.14);
+      border-radius: 12px;
+      overflow: hidden;
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 28px rgba(33, 16, 44, 0.24);
+      transform-origin: center center;
+    }
       grid-column: span 6;
       background: rgba(255,255,255,0.05);
       border: 1px solid rgba(255,255,255,0.12);
@@ -231,6 +243,72 @@
     }
 
     .memory.tall {
+      min-height: 420px;
+    }
+
+    .memory.small {
+      min-height: 220px;
+    }
+
+    .memory.medium {
+      min-height: 320px;
+    }
+
+    .memory.wide {
+      grid-column: span 8;
+    }
+
+    .memory.narrow {
+      grid-column: span 4;
+    }
+
+    .memory.rotate-left {
+      transform: rotate(-2.2deg);
+    }
+
+    .memory.rotate-right {
+      transform: rotate(2.1deg);
+    }
+
+    .memory.rotate-soft-left {
+      transform: rotate(-1deg);
+    }
+
+    .memory.rotate-soft-right {
+      transform: rotate(1.1deg);
+    }
+
+    .memory.lift-up {
+      margin-top: -18px;
+    }
+
+    .memory.push-down {
+      margin-top: 18px;
+    }
+
+    .memory.tape::before,
+    .memory.tape::after {
+      content: "";
+      position: absolute;
+      width: 74px;
+      height: 20px;
+      background: rgba(255, 243, 220, 0.28);
+      border: 1px solid rgba(255,255,255,0.18);
+      backdrop-filter: blur(2px);
+      top: 12px;
+      z-index: 3;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+
+    .memory.tape::before {
+      left: 18px;
+      transform: rotate(-11deg);
+    }
+
+    .memory.tape::after {
+      right: 18px;
+      transform: rotate(10deg);
+    }
       min-height: 420px;
     }
 
@@ -250,12 +328,33 @@
       background: #120f18;
     }
 
+    .memory::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%, transparent 72%, rgba(0,0,0,0.04));
+      z-index: 2;
+    }
+
+    .memory {
+    .memory video {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      background: #120f18;
+    }
+
     .caption {
       padding: 14px 16px 16px;
       color: #fff7fb;
       background: rgba(24, 16, 30, 0.34);
       font-size: 0.98rem;
       line-height: 1.6;
+      font-style: italic;
+      position: relative;
+      z-index: 4;
     }
 
     .quote-break {
@@ -396,8 +495,17 @@
       }
 
       .memory,
-      .memory.large {
+      .memory.large,
+      .memory.wide,
+      .memory.narrow {
         grid-column: span 12;
+        transform: none;
+        margin-top: 0;
+      }
+
+      .memory.tape::before,
+      .memory.tape::after {
+        width: 62px;
       }
     }
   </style>
@@ -465,21 +573,21 @@
           </div>
 
           <div class="memory-grid">
-            <figure class="memory tall">
+            <figure class="memory tall wide rotate-soft-left tape">
               <div class="media-wrap">
                 <img src="assets/photos/hero.jpg" alt="Opening memory" />
               </div>
               <figcaption class="caption">Replace this with your opening photo and a short caption.</figcaption>
             </figure>
 
-            <figure class="memory">
+            <figure class="memory narrow medium rotate-right push-down tape">
               <div class="media-wrap">
                 <img src="assets/photos/memory1.jpg" alt="Memory 1" />
               </div>
               <figcaption class="caption">A quiet moment, a dumb moment, or something unexpectedly important.</figcaption>
             </figure>
 
-            <figure class="memory">
+            <figure class="memory narrow small rotate-soft-left lift-up">
               <div class="media-wrap">
                 <img src="assets/photos/memory2.jpg" alt="Memory 2" />
               </div>
@@ -501,7 +609,7 @@
           </div>
 
           <div class="memory-grid">
-            <figure class="memory large">
+            <figure class="memory large rotate-soft-right tape">
               <div class="media-wrap">
                 <video controls preload="metadata" playsinline>
                   <source src="assets/videos/memory-video-1.mp4" type="video/mp4" />
@@ -510,14 +618,14 @@
               <figcaption class="caption">Drop in a video here. Background music will dim while it plays.</figcaption>
             </figure>
 
-            <figure class="memory">
+            <figure class="memory wide medium rotate-left lift-up">
               <div class="media-wrap">
                 <img src="assets/photos/memory3.jpg" alt="Memory 3" />
               </div>
               <figcaption class="caption">This is a good spot for a candid or funny image.</figcaption>
             </figure>
 
-            <figure class="memory">
+            <figure class="memory narrow tall rotate-soft-right push-down tape">
               <div class="media-wrap">
                 <img src="assets/photos/memory4.jpg" alt="Memory 4" />
               </div>
@@ -538,21 +646,21 @@
           </div>
 
           <div class="memory-grid">
-            <figure class="memory">
+            <figure class="memory narrow medium rotate-soft-left tape">
               <div class="media-wrap">
                 <img src="assets/photos/memory5.jpg" alt="Memory 5" />
               </div>
               <figcaption class="caption">Something that mattered more than anyone realized at the time.</figcaption>
             </figure>
 
-            <figure class="memory">
+            <figure class="memory wide tall rotate-right push-down">
               <div class="media-wrap">
                 <img src="assets/photos/memory6.jpg" alt="Memory 6" />
               </div>
               <figcaption class="caption">A caption like “we didn’t know this would matter so much” works well here.</figcaption>
             </figure>
 
-            <figure class="memory large">
+            <figure class="memory large rotate-soft-left tape">
               <div class="media-wrap">
                 <video controls preload="metadata" playsinline>
                   <source src="assets/videos/memory-video-2.mp4" type="video/mp4" />
@@ -575,14 +683,14 @@
           </div>
 
           <div class="memory-grid">
-            <figure class="memory">
+            <figure class="memory wide medium rotate-left tape">
               <div class="media-wrap">
                 <img src="assets/photos/memory7.jpg" alt="Memory 7" />
               </div>
               <figcaption class="caption">A tiny memory that somehow says everything.</figcaption>
             </figure>
 
-            <figure class="memory">
+            <figure class="memory narrow tall rotate-soft-right push-down">
               <div class="media-wrap">
                 <img src="assets/photos/memory8.jpg" alt="Memory 8" />
               </div>
