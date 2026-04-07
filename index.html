@@ -217,6 +217,7 @@
     }
 
     .memory {
+      position: relative;
       grid-column: span 6;
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.14);
@@ -227,15 +228,6 @@
       flex-direction: column;
       box-shadow: 0 16px 28px rgba(33, 16, 44, 0.24);
       transform-origin: center center;
-    }
-      grid-column: span 6;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 18px;
-      overflow: hidden;
-      min-height: 280px;
-      display: flex;
-      flex-direction: column;
     }
 
     .memory.large {
@@ -309,8 +301,6 @@
       right: 18px;
       transform: rotate(10deg);
     }
-      min-height: 420px;
-    }
 
     .media-wrap {
       position: relative;
@@ -335,15 +325,6 @@
       pointer-events: none;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%, transparent 72%, rgba(0,0,0,0.04));
       z-index: 2;
-    }
-
-    .memory {
-    .memory video {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
-      background: #120f18;
     }
 
     .caption {
@@ -396,7 +377,7 @@
 
     .reflection-card {
       border-radius: 28px;
-      padding: 28px;
+      padding: 34px;
       background: rgba(255,255,255,0.12);
       border: 1px solid rgba(255,255,255,0.15);
       box-shadow: var(--shadow);
@@ -416,19 +397,21 @@
     }
 
     form {
-      margin-top: 20px;
+      margin-top: 24px;
       display: grid;
-      gap: 16px;
+      gap: 22px;
     }
 
     .field {
       display: grid;
-      gap: 8px;
+      gap: 10px;
     }
 
     label {
       font-weight: 700;
       color: #fff7fb;
+      font-size: 1rem;
+      line-height: 1.45;
     }
 
     input,
@@ -438,8 +421,10 @@
       background: rgba(29, 20, 36, 0.5);
       color: var(--text);
       border-radius: 16px;
-      padding: 14px 16px;
+      padding: 16px 18px;
       font: inherit;
+      font-size: 1rem;
+      line-height: 1.6;
       outline: none;
       transition: border-color 0.2s ease, transform 0.2s ease;
     }
@@ -451,15 +436,21 @@
     }
 
     textarea {
-      min-height: 110px;
+      min-height: 140px;
       resize: vertical;
+    }
+
+    .form-actions {
+      display: grid;
+      gap: 12px;
+      margin-top: 4px;
     }
 
     .status {
       min-height: 24px;
       color: var(--accent);
       font-weight: 700;
-      margin-top: 6px;
+      line-height: 1.5;
     }
 
     .footer {
@@ -506,6 +497,18 @@
       .memory.tape::before,
       .memory.tape::after {
         width: 62px;
+      }
+
+      .reflection-card {
+        padding: 24px;
+      }
+
+      form {
+        gap: 18px;
+      }
+
+      textarea {
+        min-height: 120px;
       }
     }
   </style>
@@ -753,7 +756,7 @@
             <textarea id="q6" name="q6" required></textarea>
           </div>
 
-          <div>
+          <div class="form-actions">
             <button class="btn btn-primary" type="submit">Save my answers</button>
             <div class="status" id="formStatus"></div>
           </div>
@@ -791,9 +794,16 @@
       }
     }
 
-    startExperienceBtn.addEventListener("click", async function () {
+    async function goToMemories() {
       await startMusic();
-      memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      if (memoriesSection) {
+        memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
+
+    startExperienceBtn.addEventListener("click", function (event) {
+      event.preventDefault();
+      goToMemories();
     });
 
     function fadeMusic(targetVolume, duration = 400) {
