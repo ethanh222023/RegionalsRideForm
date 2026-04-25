@@ -259,19 +259,24 @@
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.14);
       border-radius: 12px;
-      overflow: hidden;
-      min-height: 260px;
+      overflow: visible;
       display: flex;
       flex-direction: column;
       box-shadow: 0 16px 28px rgba(33, 16, 44, 0.24);
       transform-origin: center center;
     }
 
-    .memory.size-small { grid-column: span 4; min-height: 220px; }
-    .memory.size-medium { grid-column: span 6; min-height: 300px; }
-    .memory.size-wide { grid-column: span 8; min-height: 330px; }
-    .memory.size-large { grid-column: span 12; min-height: 410px; }
-    .memory.size-tall { grid-column: span 4; min-height: 430px; }
+    .memory.size-small { grid-column: span 4; }
+    .memory.size-medium { grid-column: span 6; }
+    .memory.size-wide { grid-column: span 8; }
+    .memory.size-large { grid-column: span 12; }
+    .memory.size-tall { grid-column: span 4; }
+
+    .memory.size-small .media-wrap { aspect-ratio: 4 / 3; }
+    .memory.size-medium .media-wrap { aspect-ratio: 3 / 2; }
+    .memory.size-wide .media-wrap { aspect-ratio: 16 / 9; }
+    .memory.size-large .media-wrap { aspect-ratio: 16 / 9; }
+    .memory.size-tall .media-wrap { aspect-ratio: 3 / 4; }
 
     .memory.rotate-left { transform: rotate(-2.2deg); }
     .memory.rotate-right { transform: rotate(2.1deg); }
@@ -306,9 +311,10 @@
 
     .media-wrap {
       position: relative;
-      flex: 1;
-      min-height: 220px;
+      width: 100%;
       background: rgba(18, 13, 24, 0.55);
+      border-radius: 12px 12px 0 0;
+      overflow: hidden;
     }
 
     .memory img,
@@ -316,7 +322,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       background: #120f18;
     }
 
@@ -383,6 +389,7 @@
       padding: 14px 16px 16px;
       color: #fff7fb;
       background: rgba(24, 16, 30, 0.34);
+      border-radius: 0 0 12px 12px;
       font-size: 0.98rem;
       line-height: 1.6;
       font-style: italic;
@@ -812,6 +819,14 @@
       return result;
     }
 
+    function applyMediaAspectRatio(media, mediaWrap) {
+      const width = media.naturalWidth || media.videoWidth;
+      const height = media.naturalHeight || media.videoHeight;
+      if (!width || !height) return;
+
+      mediaWrap.style.aspectRatio = `${width} / ${height}`;
+    }
+
     function getCardClasses(index, type) {
       const sizePattern = [
         "size-wide rotate-soft-left tape",
@@ -854,6 +869,7 @@
         image.loading = "lazy";
         image.decoding = "async";
         image.addEventListener("load", () => {
+          applyMediaAspectRatio(image, mediaWrap);
           figure.classList.add("media-loaded");
         });
         image.addEventListener("error", () => {
@@ -868,6 +884,10 @@
         video.preload = "none";
         video.playsInline = true;
         video.dataset.src = item.src;
+        video.addEventListener("loadedmetadata", () => {
+          applyMediaAspectRatio(video, mediaWrap);
+          figure.classList.add("media-loaded");
+        });
         video.addEventListener("loadeddata", () => {
           figure.classList.add("media-loaded");
         });
