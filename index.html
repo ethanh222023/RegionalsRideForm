@@ -319,7 +319,7 @@
       position: relative;
       width: 100%;
       background: rgba(18, 13, 24, 0.55);
-      border-radius: 12px 12px 0 0;
+      border-radius: 12px;
       overflow: hidden;
     }
 
@@ -444,17 +444,6 @@
       pointer-events: none;
     }
 
-    .caption {
-      padding: 14px 16px 16px;
-      color: #fff7fb;
-      background: rgba(24, 16, 30, 0.34);
-      border-radius: 0 0 12px 12px;
-      font-size: 0.98rem;
-      line-height: 1.6;
-      font-style: italic;
-      position: relative;
-      z-index: 4;
-    }
 
     .empty-ending {
       min-height: 260px;
@@ -1065,16 +1054,7 @@
         mediaWrap.appendChild(videoPill);
       }
 
-      const caption = document.createElement("figcaption");
-      caption.className = "caption";
-      caption.textContent = item.fileName
-        ? item.fileName
-        : item.type === "image"
-          ? `Placeholder image ${padNumber(item.number)}`
-          : `Placeholder video ${padNumber(item.number)}`;
-
       figure.appendChild(mediaWrap);
-      figure.appendChild(caption);
       return figure;
     }
 
