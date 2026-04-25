@@ -119,6 +119,34 @@
     }
 
 
+    .skip-form-button {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 14px;
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.12);
+      color: #fff7fb;
+      font-family: inherit;
+      font-size: 0.88rem;
+      letter-spacing: 0.02em;
+      box-shadow: 0 10px 22px rgba(62, 27, 63, 0.18);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .skip-form-button:hover {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,0.18);
+      box-shadow: 0 14px 26px rgba(62, 27, 63, 0.24);
+    }
+
+
     .hero {
       min-height: 100vh;
       display: flex;
@@ -143,6 +171,7 @@
     }
 
     .hero-card {
+      position: relative;
       width: min(760px, 100%);
       padding: 42px 28px;
       border-radius: 30px;
@@ -686,6 +715,13 @@
         width: 62px;
       }
 
+      .skip-form-button {
+        position: static;
+        margin-top: 16px;
+        width: fit-content;
+        max-width: 100%;
+      }
+
       .reflection-card {
         padding: 24px;
       }
@@ -736,6 +772,7 @@
       <p>
         We had so much fun this year and its nice to look back on what we experienced, so here is the a brief collection of some of the fun things we did.
       </p>
+      <button id="skipFormButton" class="skip-form-button" type="button">Skip to the Ride Form</button>
       <button id="beginButton" class="begin-button" type="button" aria-label="Click here to begin the slideshow">
         <span class="begin-text">Click here to begin</span>
       </button>
@@ -1851,6 +1888,28 @@
         beginButton.innerHTML = `<span>Scroll down</span><span class="scroll-arrow">↓</span>`;
       }, { once: true });
     }
+
+
+    function connectSkipFormButton() {
+      const skipFormButton = document.getElementById("skipFormButton");
+      const reflectionSection = document.querySelector(".reflection");
+      const beginButton = document.getElementById("beginButton");
+      if (!skipFormButton || !reflectionSection) return;
+
+      skipFormButton.addEventListener("click", async () => {
+        await startMusic();
+        unlockScrolling();
+
+        if (beginButton && !beginButton.classList.contains("started")) {
+          beginButton.classList.add("started");
+          beginButton.disabled = true;
+          beginButton.setAttribute("aria-label", "Scroll down to the memories");
+          beginButton.innerHTML = `<span>Scroll down</span><span class="scroll-arrow">↓</span>`;
+        }
+
+        reflectionSection.scrollIntoView({ behavior: "smooth", block: "start" });
+      });
+    }
     
   forceTopOfPage();
   lockScrollingUntilStart();
@@ -1861,6 +1920,7 @@
   connectForm();
   restoreSavedDraft();
   connectBeginButton();
+  connectSkipFormButton();
 
   </script>
 </body>
