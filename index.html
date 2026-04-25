@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Year in Memories</title>
+  <title>Virginia Tech Burn 2025-2026</title>
   <style>
     :root {
       --bg-1: #7f688f;
@@ -676,8 +676,7 @@
     <div class="hero-card reveal visible">
       <h1>Our Year in Memories</h1>
       <p>
-        A messy, sentimental archive of Burn this year. The tournaments, the houses,
-        the vans, the naps, the side quests, and every ridiculous thing we somehow made important.
+        We had so much fun this year and its nice to look back on what we experienced, so here is the a brief collection of some of the fun things we did.
       </p>
       <div class="scroll-cue" aria-hidden="true">
         <span>Scroll down</span>
@@ -692,9 +691,9 @@
 
     <section class="quote-break reveal">
       <blockquote>
-        “It didn’t feel important when it was happening. That’s why we had to save it.”
+        Thank you all for making this year so special. It wouldn't be VT Burn without each and everyone of you, so thank you for all playing frisbee with me :)
       </blockquote>
-      <span>Burn 25-26</span>
+      <span>P.S. Thanks to everyone who submitted pictures/videos. This wouldn't be possible without you</span>
     </section>
 
     <section class="reflection reveal">
@@ -760,7 +759,7 @@
 
     const sections = [
       {
-            "title": "We've had fun this year, huh",
+            "title": "We've had fun this year, huh?",
             "folder": "section01",
             "images": 70,
             "videos": 13,
@@ -1562,17 +1561,6 @@
 
         const copy = document.createElement("p");
         copy.className = "section-copy";
-        if (section.imageFiles || section.videoFiles) {
-          copy.textContent = `${section.images} image${section.images === 1 ? "" : "s"} and ${section.videos} video${section.videos === 1 ? "" : "s"} loaded for this section. Videos are spread throughout the photos instead of being dumped into one sad little pile.`;
-        } else if (section.images && section.videos) {
-          copy.textContent = `${section.images} image placeholder${section.images === 1 ? "" : "s"} and ${section.videos} video placeholder${section.videos === 1 ? "" : "s"}. Videos are spread throughout this section instead of being dumped into one sad little pile.`;
-        } else if (section.images) {
-          copy.textContent = `${section.images} image placeholder${section.images === 1 ? "" : "s"}.`;
-        } else if (section.videos) {
-          copy.textContent = `${section.videos} video placeholder${section.videos === 1 ? "" : "s"}.`;
-        } else {
-          copy.textContent = "";
-        }
 
         header.appendChild(eyebrow);
         header.appendChild(title);
