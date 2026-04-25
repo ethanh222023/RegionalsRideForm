@@ -1757,12 +1757,31 @@
       }
     }
 
-    renderSections();
-    connectLazyMedia();
-    connectVideoAudioDimming();
-    connectRevealAnimations();
-    connectForm();
-    restoreSavedDraft();
+    function connectMusicStart() {
+      const startEvents = ["click", "touchstart", "keydown", "wheel", "scroll"];
+
+      const tryStartMusic = async () => {
+        await startMusic();
+
+        if (musicStarted) {
+          startEvents.forEach((eventName) => {
+            window.removeEventListener(eventName, tryStartMusic);
+          });
+        }
+      };
+
+  startEvents.forEach((eventName) => {
+    window.addEventListener(eventName, tryStartMusic, { passive: true });
+  });
+}
+    
+  renderSections();
+  connectLazyMedia();
+  connectVideoAudioDimming();
+  connectRevealAnimations();
+  connectForm();
+  restoreSavedDraft();
+  connectMusicStart();
 
   </script>
 </body>
