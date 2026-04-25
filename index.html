@@ -61,6 +61,53 @@
         radial-gradient(circle at 75% 76%, rgba(222,207,255,0.06), transparent 18%);
     }
 
+
+
+    body.scroll-locked {
+      height: 100vh;
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    body.scroll-unlocked {
+      overflow-x: hidden;
+    }
+
+    .begin-button {
+      margin-top: 28px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 24px;
+      border: 1px solid rgba(255,255,255,0.24);
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #5b304c;
+      font-family: inherit;
+      font-size: 1.05rem;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      box-shadow: 0 12px 26px rgba(62, 27, 63, 0.22);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
+    }
+
+    .begin-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 30px rgba(62, 27, 63, 0.28);
+    }
+
+    .begin-button.started {
+      background: rgba(255,255,255,0.10);
+      color: #fff7fb;
+      font-weight: 400;
+      border-color: rgba(255,255,255,0.18);
+      box-shadow: 0 12px 26px rgba(62, 27, 63, 0.16);
+    }
+
+
     .hero {
       min-height: 100vh;
       display: flex;
@@ -642,7 +689,7 @@
     }
   </style>
 </head>
-<body>
+<body class="scroll-locked">
   <!--
     ============================
     ASSET PLACEMENT GUIDE
@@ -678,10 +725,9 @@
       <p>
         We had so much fun this year and its nice to look back on what we experienced, so here is the a brief collection of some of the fun things we did.
       </p>
-      <div class="scroll-cue" aria-hidden="true">
-        <span>Scroll down</span>
-        <span class="scroll-arrow">↓</span>
-      </div>
+      <button id="beginButton" class="begin-button" type="button" aria-label="Click here to begin the slideshow">
+        <span class="begin-text">Click here to begin</span>
+      </button>
       <div class="music-note">Turn sound on for the full experience.</div>
     </div>
   </header>
@@ -1757,31 +1803,45 @@
       }
     }
 
-    function connectMusicStart() {
-      const startEvents = ["click", "touchstart", "keydown", "wheel"];
+    function lockScrollingUntilStart() {
+      window.scrollTo(0, 0);
+      document.body.classList.add("scroll-locked");
+      document.body.classList.remove("scroll-unlocked");
+    }
 
-      const tryStartMusic = async () => {
+    function unlockScrolling() {
+      document.body.classList.remove("scroll-locked");
+      document.body.classList.add("scroll-unlocked");
+    }
+
+    function connectBeginButton() {
+      const beginButton = document.getElementById("beginButton");
+      if (!beginButton) return;
+
+      beginButton.addEventListener("click", async () => {
         await startMusic();
+        unlockScrolling();
 
-        if (musicStarted) {
-          startEvents.forEach((eventName) => {
-            window.removeEventListener(eventName, tryStartMusic);
-          });
-        }
-      };
+        beginButton.classList.add("started");
+        beginButton.setAttribute("aria-label", "Scroll down to the memories");
+        beginButton.innerHTML = `<span>Scroll down</span><span class="scroll-arrow">↓</span>`;
 
-  startEvents.forEach((eventName) => {
-    window.addEventListener(eventName, tryStartMusic, { passive: true });
-  });
-}
+        setTimeout(() => {
+          if (memoriesSection) {
+            memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }, 250);
+      }, { once: true });
+    }
     
+  lockScrollingUntilStart();
   renderSections();
   connectLazyMedia();
   connectVideoAudioDimming();
   connectRevealAnimations();
   connectForm();
   restoreSavedDraft();
-  connectMusicStart();
+  connectBeginButton();
 
   </script>
 </body>
