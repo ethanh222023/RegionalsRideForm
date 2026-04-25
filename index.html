@@ -1402,16 +1402,53 @@
       if (videos.length === 0) return images;
       if (images.length === 0) return videos;
 
-      const result = [...images];
-      videos.forEach((video, index) => {
-        const insertAt = Math.min(
-          result.length,
-          Math.floor(((index + 1) * result.length) / (videos.length + 1))
-        );
-        result.splice(insertAt + index, 0, video);
-      });
+      const result = [];
+      let imageIndex = 0;
+      let videoIndex = 0;
+      const totalItems = images.length + videos.length;
+
+      for (let slot = 0; slot < totalItems; slot += 1) {
+        const targetVideoCount = Math.floor(((slot + 1) * videos.length) / totalItems);
+        const shouldPlaceVideo = videoIndex < videos.length && videoIndex < targetVideoCount;
+
+        if (shouldPlaceVideo) {
+          result.push(videos[videoIndex]);
+          videoIndex += 1;
+        } else if (imageIndex < images.length) {
+          result.push(images[imageIndex]);
+          imageIndex += 1;
+        } else if (videoIndex < videos.length) {
+          result.push(videos[videoIndex]);
+          videoIndex += 1;
+        }
+      }
 
       return result;
+    }
+
+    function getVideoSourceCandidates(src) {
+      const candidates = [src];
+
+      if (src.endsWith(".mp4")) {
+        candidates.push(`${src.slice(0, -4)}.MP4`);
+      } else if (src.endsWith(".MP4")) {
+        candidates.push(`${src.slice(0, -4)}.mp4`);
+      }
+
+      return [...new Set(candidates)];
+    }
+
+    function addVideoSources(video) {
+      if (!video.dataset.src || video.dataset.sourcesAdded === "true") return;
+
+      getVideoSourceCandidates(video.dataset.src).forEach((src) => {
+        const source = document.createElement("source");
+        source.src = src;
+        source.type = "video/mp4";
+        video.appendChild(source);
+      });
+
+      video.dataset.sourcesAdded = "true";
     }
 
     function applyMediaAspectRatio(media, mediaWrap) {
@@ -1599,10 +1636,7 @@
         if (item.tagName.toLowerCase() === "img") {
           item.src = item.dataset.src;
         } else {
-          const source = document.createElement("source");
-          source.src = item.dataset.src;
-          source.type = "video/mp4";
-          item.appendChild(source);
+          addVideoSources(item);
           item.load();
         }
       };
@@ -1635,10 +1669,7 @@
           const figure = video.closest(".memory");
           if (figure) figure.classList.add("is-playing");
           if (video.dataset.src && video.dataset.loaded !== "true") {
-            const source = document.createElement("source");
-            source.src = video.dataset.src;
-            source.type = "video/mp4";
-            video.appendChild(source);
+            addVideoSources(video);
             video.dataset.loaded = "true";
             video.load();
             video.play();
