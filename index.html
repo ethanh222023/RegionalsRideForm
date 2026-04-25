@@ -715,7 +715,94 @@
             "title": "We've had fun this year, huh",
             "folder": "section01",
             "images": 70,
-            "videos": 13
+            "videos": 13,
+            "imageFiles": [
+                  "IMG_6818.JPEG",
+                  "IMG_0497.JPG",
+                  "IMG_0864.JPG",
+                  "IMG_0990.JPG",
+                  "IMG_1051.JPG",
+                  "IMG_1332.JPG",
+                  "IMG_1763.JPG",
+                  "IMG_1805.JPG",
+                  "IMG_1809.JPG",
+                  "IMG_1814.jpg",
+                  "IMG_1702.jpg",
+                  "IMG_1906.JPG",
+                  "IMG_1958.JPG",
+                  "IMG_1966.JPG",
+                  "IMG_2022.JPG",
+                  "IMG_2049.JPG",
+                  "IMG_2090.JPG",
+                  "IMG_2094.JPG",
+                  "IMG_2121.JPG",
+                  "IMG_2123.JPG",
+                  "IMG_2139.JPG",
+                  "IMG_2159.JPG",
+                  "IMG_2208.JPG",
+                  "IMG_2215.JPG",
+                  "IMG_2216.JPG",
+                  "IMG_2220.JPG",
+                  "IMG_2467.JPG",
+                  "IMG_2497.JPG",
+                  "IMG_2668.JPG",
+                  "IMG_2789.JPG",
+                  "IMG_2887.JPG",
+                  "IMG_3250.JPG",
+                  "IMG_3397.JPG",
+                  "IMG_3461.JPG",
+                  "IMG_3557.JPG",
+                  "IMG_1995.jpg",
+                  "IMG_3639.JPG",
+                  "IMG_3722.JPG",
+                  "IMG_3788.JPG",
+                  "IMG_3802.JPG",
+                  "IMG_3869.JPG",
+                  "IMG_3881.JPG",
+                  "IMG_3947.JPG",
+                  "IMG_4139.JPG",
+                  "IMG_4448.JPG",
+                  "IMG_4664.JPG",
+                  "IMG_4672.JPG",
+                  "IMG_4727.JPG",
+                  "IMG_4817.JPG",
+                  "IMG_5061.JPG",
+                  "IMG_5142.JPG",
+                  "IMG_5144.JPG",
+                  "IMG_5193.JPG",
+                  "IMG_5215.JPG",
+                  "IMG_5265.JPG",
+                  "IMG_5309.JPG",
+                  "IMG_5608.JPG",
+                  "IMG_6122.JPG",
+                  "IMG_6225.JPG",
+                  "IMG_6833.JPG",
+                  "IMG_1722.jpg",
+                  "IMG_7403.JPG",
+                  "IMG_7470.JPG",
+                  "IMG_8268.JPG",
+                  "IMG_8279.JPG",
+                  "IMG_8285.JPG",
+                  "IMG_8433.JPG",
+                  "lp_image.JPG",
+                  "IMG_1715.PNG",
+                  "IMG_2120.PNG"
+                        ],
+            "videoFiles": [
+                  "2C00B130-4C56-4D59-BA94-A1443F6B3DA5.mp4",
+                  "7C74A1B6-EDDD-4845-A36A-864851BC5B3B.MP4",
+                  "8A99868A-16A1-49AD-A8D4-752C5DC70B8A.MP4",
+                  "31BE166C-F5F8-49FE-A350-4315F672E9C5.MP4",
+                  "a582053752ab9ead9bd2e05d923d6f4c.MP4",
+                  "CE6F2C08-FDCD-499F-9463-C41E9788CE3A.MP4",
+                  "FA7D28F3-B746-45C6-87FC-2D09455CE5D8.MP4",
+                  "IMG_1063.MP4",
+                  "IMG_1723.MP4",
+                  "IMG_1728.MP4",
+                  "IMG_1755.MP4",
+                  "IMG_6379.MP4",
+                  "IMG_8850 2.MP4"
+            ]
       },
       {
             "title": "Downtown has generated a whole bunch of stories",
@@ -776,7 +863,8 @@
             "folder": "section11",
             "images": 4,
             "videos": 0
-      }];
+      }
+];
 
     const bgMusic = document.getElementById("bgMusic");
     const memoriesSection = document.getElementById("memories");
@@ -792,17 +880,36 @@
     }
 
     function buildDistributedMedia(section) {
-      const images = Array.from({ length: section.images }, (_, index) => ({
-        type: "image",
-        number: index + 1,
-        src: `assets/${section.folder}/images/image${padNumber(index + 1)}.jpg`
-      }));
+      const imageFiles = section.imageFiles || [];
+      const videoFiles = section.videoFiles || [];
 
-      const videos = Array.from({ length: section.videos }, (_, index) => ({
-        type: "video",
-        number: index + 1,
-        src: `assets/${section.folder}/videos/video${padNumber(index + 1)}.mp4`
-      }));
+      const images = imageFiles.length > 0
+        ? imageFiles.map((fileName, index) => ({
+            type: "image",
+            number: index + 1,
+            fileName,
+            src: `assets/${section.folder}/images/${fileName}`
+          }))
+        : Array.from({ length: section.images }, (_, index) => ({
+            type: "image",
+            number: index + 1,
+            fileName: `image${padNumber(index + 1)}.jpg`,
+            src: `assets/${section.folder}/images/image${padNumber(index + 1)}.jpg`
+          }));
+
+      const videos = videoFiles.length > 0
+        ? videoFiles.map((fileName, index) => ({
+            type: "video",
+            number: index + 1,
+            fileName,
+            src: `assets/${section.folder}/videos/${fileName}`
+          }))
+        : Array.from({ length: section.videos }, (_, index) => ({
+            type: "video",
+            number: index + 1,
+            fileName: `video${padNumber(index + 1)}.mp4`,
+            src: `assets/${section.folder}/videos/video${padNumber(index + 1)}.mp4`
+          }));
 
       if (videos.length === 0) return images;
       if (images.length === 0) return videos;
@@ -811,9 +918,9 @@
       videos.forEach((video, index) => {
         const insertAt = Math.min(
           result.length,
-          Math.floor(((index + 1) * result.length) / (videos.length + 1)) + index
+          Math.floor(((index + 1) * result.length) / (videos.length + 1))
         );
-        result.splice(insertAt, 0, video);
+        result.splice(insertAt + index, 0, video);
       });
 
       return result;
@@ -859,8 +966,8 @@
       const placeholder = document.createElement("div");
       placeholder.className = "media-placeholder";
       placeholder.innerHTML = item.type === "image"
-        ? `<div><strong>Image ${padNumber(item.number)}</strong><span>${item.src}</span></div>`
-        : `<div><strong>Video ${padNumber(item.number)}</strong><span>${item.src}</span></div>`;
+        ? `<div><strong>Image ${padNumber(item.number)}</strong><span>${item.fileName || item.src}</span></div>`
+        : `<div><strong>Video ${padNumber(item.number)}</strong><span>${item.fileName || item.src}</span></div>`;
 
       if (item.type === "image") {
         const image = document.createElement("img");
@@ -897,9 +1004,11 @@
 
       const caption = document.createElement("figcaption");
       caption.className = "caption";
-      caption.textContent = item.type === "image"
-        ? `Placeholder image ${padNumber(item.number)}`
-        : `Placeholder video ${padNumber(item.number)}`;
+      caption.textContent = item.fileName
+        ? item.fileName
+        : item.type === "image"
+          ? `Placeholder image ${padNumber(item.number)}`
+          : `Placeholder video ${padNumber(item.number)}`;
 
       figure.appendChild(mediaWrap);
       figure.appendChild(caption);
@@ -927,7 +1036,9 @@
 
         const copy = document.createElement("p");
         copy.className = "section-copy";
-        if (section.images && section.videos) {
+        if (section.imageFiles || section.videoFiles) {
+          copy.textContent = `${section.images} image${section.images === 1 ? "" : "s"} and ${section.videos} video${section.videos === 1 ? "" : "s"} loaded for this section. Videos are spread throughout the photos instead of being dumped into one sad little pile.`;
+        } else if (section.images && section.videos) {
           copy.textContent = `${section.images} image placeholder${section.images === 1 ? "" : "s"} and ${section.videos} video placeholder${section.videos === 1 ? "" : "s"}. Videos are spread throughout this section instead of being dumped into one sad little pile.`;
         } else if (section.images) {
           copy.textContent = `${section.images} image placeholder${section.images === 1 ? "" : "s"}.`;
