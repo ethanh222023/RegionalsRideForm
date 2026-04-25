@@ -272,10 +272,11 @@
     .memory.size-large { grid-column: span 6; }
     .memory.size-tall { grid-column: span 4; }
 
-    .memory.size-small .media-wrap,
-    .memory.size-medium .media-wrap,
-    .memory.size-wide .media-wrap,
-    .memory.size-large .media-wrap {
+    /* Default only before the real media loads.
+       Once loaded, JavaScript changes this to the actual image/video ratio
+       so nothing gets cropped. Incredible that media should be allowed to exist
+       in its own shape, but here we are. */
+    .memory .media-wrap {
       aspect-ratio: 4 / 3;
     }
 
@@ -327,7 +328,7 @@
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: cover;
+      object-fit: contain;
       background: #120f18;
     }
 
@@ -985,8 +986,11 @@
     }
 
     function applyMediaAspectRatio(media, mediaWrap) {
-      // Keep media sizes uniform across the section instead of letting one giant vertical photo bully the entire layout.
-      return;
+      const width = media.naturalWidth || media.videoWidth;
+      const height = media.naturalHeight || media.videoHeight;
+      if (!width || !height) return;
+
+      mediaWrap.style.aspectRatio = `${width} / ${height}`;
     }
 
     function getCardClasses(index, type) {
