@@ -938,7 +938,7 @@
   </footer>
 
   <script>
-    const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbx7Dnyf8zMxaS-mO48loPXR0oC6PzJQh_UZIRarxG3yoIWjOeSEWsRnBxBA_8621USCZQ/exec";
+    const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbycHPUavg-o87cPU2UgSlJg4_T1f5RmSOSkxHb8DP448tZuUS2HCQ__UK8TzvN0Gqysgw/exec";
 
     const sections = [
       {
@@ -1909,14 +1909,16 @@
           return;
         }
 
+        const submitButton = form.querySelector('button[type="submit"]');
+        if (submitButton) submitButton.disabled = true;
+
         try {
+          const body = new URLSearchParams(payload);
+
           await fetch(FORM_ENDPOINT, {
             method: "POST",
             mode: "no-cors",
-            headers: {
-              "Content-Type": "text/plain;charset=utf-8"
-            },
-            body: JSON.stringify(payload)
+            body
           });
 
           formStatus.textContent = "Submitted. Thank you!";
@@ -1926,6 +1928,8 @@
           console.error(error);
           formStatus.textContent = "Could not submit right now. Your answers were saved locally in this browser.";
           localStorage.setItem("rideFormDraft", JSON.stringify(payload));
+        } finally {
+          if (submitButton) submitButton.disabled = false;
         }
       });
     }
