@@ -4,6 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Virginia Tech Burn 2025-2026</title>
+  <script>
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+  </script>
   <style>
     :root {
       --bg-1: #7f688f;
@@ -63,12 +68,14 @@
 
 
 
+    html.scroll-locked,
     body.scroll-locked {
       height: 100vh;
       overflow: hidden;
       touch-action: none;
     }
 
+    html.scroll-unlocked,
     body.scroll-unlocked {
       overflow-x: hidden;
     }
@@ -1803,14 +1810,24 @@
       }
     }
 
-    function lockScrollingUntilStart() {
+    function forceTopOfPage() {
       window.scrollTo(0, 0);
+      document.documentElement.scrollTop = 0;
+      document.body.scrollTop = 0;
+    }
+
+    function lockScrollingUntilStart() {
+      forceTopOfPage();
+      document.documentElement.classList.add("scroll-locked");
       document.body.classList.add("scroll-locked");
+      document.documentElement.classList.remove("scroll-unlocked");
       document.body.classList.remove("scroll-unlocked");
     }
 
     function unlockScrolling() {
+      document.documentElement.classList.remove("scroll-locked");
       document.body.classList.remove("scroll-locked");
+      document.documentElement.classList.add("scroll-unlocked");
       document.body.classList.add("scroll-unlocked");
     }
 
@@ -1826,11 +1843,6 @@
         beginButton.setAttribute("aria-label", "Scroll down to the memories");
         beginButton.innerHTML = `<span>Scroll down</span><span class="scroll-arrow">↓</span>`;
 
-        setTimeout(() => {
-          if (memoriesSection) {
-            memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }, 250);
       }, { once: true });
     }
     
