@@ -1893,13 +1893,26 @@
         formStatus.textContent = "Submitting your ride form...";
 
         const formData = new FormData(form);
+        const rideNeeded = formData.get("ride_needed") || "";
+        const seatCount = formData.get("seat_count") || "";
+        const pickupLocation = formData.get("pickup_location") || "";
+        const extraNotes = formData.get("extra_notes") || "";
+
         const payload = {
           timestamp: new Date().toISOString(),
           name: formData.get("name") || "",
-          ride_needed: formData.get("ride_needed") || "",
-          seat_count: formData.get("seat_count") || "",
-          pickup_location: formData.get("pickup_location") || "",
-          extra_notes: formData.get("extra_notes") || ""
+
+          // Descriptive keys
+          ride_needed: rideNeeded,
+          seat_count: seatCount,
+          pickup_location: pickupLocation,
+          extra_notes: extraNotes,
+
+          // Backup q-style keys, in case your Apps Script is reading q2-q5
+          q2: rideNeeded,
+          q3: seatCount,
+          q4: pickupLocation,
+          q5: extraNotes
         };
 
         localStorage.setItem("rideFormDraft", JSON.stringify(payload));
@@ -1913,17 +1926,18 @@
         if (submitButton) submitButton.disabled = true;
 
         try {
-          const body = new URLSearchParams(payload);
-
           await fetch(FORM_ENDPOINT, {
             method: "POST",
             mode: "no-cors",
-            body
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
+            },
+            body: new URLSearchParams(payload).toString()
           });
 
-          formStatus.textContent = "Submitted. Thank you!";
-          localStorage.removeItem("rideFormDraft");
-          form.reset();
+          formStatus.textContent = "Submitted. Thank you! Your answers have been left here.";
+
+          // Do not reset the form. Leave the user's answers visible after submission.
         } catch (error) {
           console.error(error);
           formStatus.textContent = "Could not submit right now. Your answers were saved locally in this browser.";
