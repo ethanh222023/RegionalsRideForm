@@ -654,6 +654,85 @@
       resize: vertical;
     }
 
+    .choice-field {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    legend {
+      font-weight: 700;
+      color: #fff7fb;
+      font-size: 1rem;
+      line-height: 1.45;
+      padding: 0;
+      margin-bottom: 10px;
+    }
+
+    .required-note,
+    .optional-note {
+      display: inline-block;
+      margin-left: 8px;
+      font-size: 0.76rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      opacity: 0.95;
+      font-weight: 700;
+    }
+
+    .optional-note {
+      color: rgba(255, 247, 251, 0.76);
+    }
+
+    .field-help {
+      margin: -2px 0 4px;
+      color: rgba(240, 221, 234, 0.82);
+      font-size: 0.92rem;
+      line-height: 1.5;
+    }
+
+    .choice-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+    }
+
+    .choice-grid-wide {
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
+
+    .choice-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 13px 14px;
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(29, 20, 36, 0.42);
+      border-radius: 16px;
+      color: var(--text);
+      font-weight: 400;
+      cursor: pointer;
+      transition: border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+    }
+
+    .choice-option:hover {
+      border-color: rgba(255, 220, 233, 0.7);
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    .choice-option input {
+      width: auto;
+      margin: 0;
+      accent-color: #f7c4da;
+      cursor: pointer;
+    }
+
+    .choice-option span {
+      line-height: 1.35;
+    }
+
     .form-actions {
       display: grid;
       gap: 12px;
@@ -793,50 +872,60 @@
     <section class="reflection reveal">
       <div class="reflection-card">
         <div class="eyebrow">Reflection</div>
-        <h2>Before You Leave</h2>
+        <h2>Ride Form</h2>
         <p>
-          Answer these six questions and save the little things this year meant to you.
-          Because apparently humans enjoy emotional damage with a submit button.
+          Fill this out so rides can be organized without turning the group chat into a burning pile of logistics.
+          Questions 1, 2, and 3 are required. Questions 4 and 5 are optional.
         </p>
 
         <form id="memoryForm">
           <div class="field">
-            <label for="name">Your name</label>
+            <label for="name">1. What is your name? <span class="required-note">Required</span></label>
             <input id="name" name="name" type="text" placeholder="Type your name here" required />
           </div>
 
-          <div class="field">
-            <label for="q1">1. What moment from this year do you wish you could relive?</label>
-            <textarea id="q1" name="q1" required></textarea>
-          </div>
+          <fieldset class="field choice-field">
+            <legend>2. Do you need a ride? <span class="required-note">Required</span></legend>
+            <div class="choice-grid">
+              <label class="choice-option"><input type="radio" name="ride_needed" value="Yes, I need a ride" required /> <span>Yes, I need a ride</span></label>
+              <label class="choice-option"><input type="radio" name="ride_needed" value="No, I do not need a ride" /> <span>No, I do not need a ride</span></label>
+              <label class="choice-option"><input type="radio" name="ride_needed" value="Not sure yet" /> <span>Not sure yet</span></label>
+            </div>
+          </fieldset>
 
-          <div class="field">
-            <label for="q2">2. Who made this year better for you?</label>
-            <textarea id="q2" name="q2" required></textarea>
-          </div>
+          <fieldset class="field choice-field">
+            <legend>3. How many seats do you need? <span class="required-note">Required</span></legend>
+            <div class="choice-grid">
+              <label class="choice-option"><input type="radio" name="seat_count" value="0 seats" required /> <span>0 seats</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="1 seat" /> <span>1 seat</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="2 seats" /> <span>2 seats</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="3 seats" /> <span>3 seats</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="4+ seats" /> <span>4+ seats</span></label>
+            </div>
+          </fieldset>
 
-          <div class="field">
-            <label for="q3">3. What changed the most this year?</label>
-            <textarea id="q3" name="q3" required></textarea>
-          </div>
+          <fieldset class="field choice-field optional-field">
+            <legend>4. Preferred pickup area <span class="optional-note">Optional</span></legend>
+            <p class="field-help">Optional. Leave blank if you do not care where pickup happens.</p>
+            <div class="choice-grid choice-grid-wide">
+              <label class="choice-option"><input type="radio" name="pickup_location" value="D2" /> <span>D2</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="Squires" /> <span>Squires</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="Drillfield" /> <span>Drillfield</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="Foxridge" /> <span>Foxridge</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="The Edge" /> <span>The Edge</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="Downtown Blacksburg" /> <span>Downtown Blacksburg</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="CRC" /> <span>CRC</span></label>
+              <label class="choice-option"><input type="radio" name="pickup_location" value="Other" /> <span>Other</span></label>
+            </div>
+          </fieldset>
 
-          <div class="field">
-            <label for="q4">4. What is something you never want to forget?</label>
-            <textarea id="q4" name="q4" required></textarea>
-          </div>
-
-          <div class="field">
-            <label for="q5">5. What surprised you most about this year?</label>
-            <textarea id="q5" name="q5" required></textarea>
-          </div>
-
-          <div class="field">
-            <label for="q6">6. Where do you hope life takes you next?</label>
-            <textarea id="q6" name="q6" required></textarea>
+          <div class="field optional-field">
+            <label for="extra_notes">5. Anything else we should know? <span class="optional-note">Optional</span></label>
+            <textarea id="extra_notes" name="extra_notes" placeholder="Optional. Add any extra ride details here."></textarea>
           </div>
 
           <div class="form-actions">
-            <button class="btn btn-primary" type="submit">Save my answers</button>
+            <button class="btn btn-primary" type="submit">Submit Ride Form</button>
             <div class="status" id="formStatus"></div>
           </div>
         </form>
@@ -849,7 +938,7 @@
   </footer>
 
   <script>
-    const FORM_ENDPOINT = "PASTE_YOUR_FORM_ENDPOINT_HERE";
+    const FORM_ENDPOINT = "https://script.google.com/macros/s/AKfycbx7Dnyf8zMxaS-mO48loPXR0oC6PzJQh_UZIRarxG3yoIWjOeSEWsRnBxBA_8621USCZQ/exec";
 
     const sections = [
       {
@@ -1801,53 +1890,65 @@
     function connectForm() {
       form.addEventListener("submit", async (event) => {
         event.preventDefault();
-        formStatus.textContent = "Saving your answers...";
+        formStatus.textContent = "Submitting your ride form...";
 
         const formData = new FormData(form);
-        const payload = Object.fromEntries(formData.entries());
-        payload.timestamp = new Date().toISOString();
+        const payload = {
+          timestamp: new Date().toISOString(),
+          name: formData.get("name") || "",
+          ride_needed: formData.get("ride_needed") || "",
+          seat_count: formData.get("seat_count") || "",
+          pickup_location: formData.get("pickup_location") || "",
+          extra_notes: formData.get("extra_notes") || ""
+        };
+
+        localStorage.setItem("rideFormDraft", JSON.stringify(payload));
 
         if (!FORM_ENDPOINT || FORM_ENDPOINT === "PASTE_YOUR_FORM_ENDPOINT_HERE") {
-          localStorage.setItem("memoryFormDraft", JSON.stringify(payload));
-          formStatus.textContent = "Form endpoint not set yet. Answers were saved in this browser only.";
+          formStatus.textContent = "Form endpoint not set yet. Your answers were saved in this browser only.";
           return;
         }
 
         try {
-          const response = await fetch(FORM_ENDPOINT, {
+          await fetch(FORM_ENDPOINT, {
             method: "POST",
+            mode: "no-cors",
             headers: {
-              "Content-Type": "application/json"
+              "Content-Type": "text/plain;charset=utf-8"
             },
             body: JSON.stringify(payload)
           });
 
-          if (!response.ok) {
-            throw new Error("Submission failed");
-          }
-
-          formStatus.textContent = "Your answers were saved.";
+          formStatus.textContent = "Submitted. Thank you!";
+          localStorage.removeItem("rideFormDraft");
           form.reset();
         } catch (error) {
           console.error(error);
-          formStatus.textContent = "Could not submit right now. Your answers were not lost, they were saved locally in this browser.";
-          localStorage.setItem("memoryFormDraft", JSON.stringify(payload));
+          formStatus.textContent = "Could not submit right now. Your answers were saved locally in this browser.";
+          localStorage.setItem("rideFormDraft", JSON.stringify(payload));
         }
       });
     }
 
     function restoreSavedDraft() {
-      const savedDraft = localStorage.getItem("memoryFormDraft");
+      const savedDraft = localStorage.getItem("rideFormDraft");
       if (!savedDraft) return;
 
       try {
         const parsed = JSON.parse(savedDraft);
         Object.keys(parsed).forEach((key) => {
-          const field = document.querySelector(`[name="${key}"]`);
-          if (field) field.value = parsed[key];
+          const value = parsed[key];
+          const fields = document.querySelectorAll('[name="' + key + '"]');
+          fields.forEach((field) => {
+            if (field.type === "radio") {
+              field.checked = field.value === value;
+            } else {
+              field.value = value;
+            }
+          });
         });
       } catch (error) {
-        console.log("No usable saved draft found.");
+        console.log("No usable saved ride form draft found.");
       }
     }
 
