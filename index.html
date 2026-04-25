@@ -27,6 +27,8 @@
 
     html {
       scroll-behavior: smooth;
+      background: var(--bg-4);
+      overscroll-behavior: none;
     }
 
     body {
@@ -34,6 +36,8 @@
       font-family: Georgia, "Times New Roman", serif;
       color: var(--text);
       overflow-x: hidden;
+      min-height: 100vh;
+      overscroll-behavior: none;
       background:
         radial-gradient(circle at top, rgba(255, 214, 230, 0.34), transparent 30%),
         radial-gradient(circle at 15% 18%, rgba(219, 204, 255, 0.22), transparent 22%),
@@ -155,6 +159,8 @@
     }
 
     .section {
+      content-visibility: auto;
+      contain-intrinsic-size: 900px;
       position: relative;
       padding-left: 70px;
       margin: 0 0 72px;
@@ -290,6 +296,56 @@
       pointer-events: none;
       background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 24%, transparent 72%, rgba(0,0,0,0.04));
       z-index: 2;
+    }
+
+
+    .media-placeholder {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      text-align: center;
+      color: rgba(255, 247, 251, 0.88);
+      background:
+        linear-gradient(135deg, rgba(255, 220, 233, 0.22), rgba(91, 71, 111, 0.26)),
+        radial-gradient(circle at 35% 25%, rgba(255,255,255,0.18), transparent 32%),
+        rgba(26, 18, 34, 0.72);
+      z-index: 1;
+      font-style: italic;
+      line-height: 1.45;
+    }
+
+    .media-placeholder strong {
+      display: block;
+      font-size: 1.05rem;
+      margin-bottom: 6px;
+      color: #fff7fb;
+    }
+
+    .media-placeholder span {
+      display: block;
+      font-size: 0.85rem;
+      opacity: 0.78;
+      word-break: break-word;
+    }
+
+    .memory img,
+    .memory video {
+      opacity: 0;
+      transition: opacity 0.35s ease;
+      position: relative;
+      z-index: 2;
+    }
+
+    .memory.media-loaded img,
+    .memory.media-loaded video {
+      opacity: 1;
+    }
+
+    .memory.media-loaded .media-placeholder {
+      opacity: 0;
+      pointer-events: none;
     }
 
     .caption {
@@ -447,14 +503,14 @@
     }
 
     .reveal {
-      opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      opacity: 1;
+      transform: none;
+      transition: none;
     }
 
     .reveal.visible {
       opacity: 1;
-      transform: translateY(0);
+      transform: none;
     }
 
     @media (max-width: 780px) {
@@ -609,7 +665,7 @@
   </main>
 
   <footer class="footer reveal">
-    Thanks, Burn. We all made this year so great.
+    Burn 25-26
   </footer>
 
   <script>
@@ -681,14 +737,7 @@
             "folder": "section11",
             "images": 4,
             "videos": 0
-      },
-      {
-            "title": "Thanks, Burn. We all made this year so great",
-            "folder": "section12",
-            "images": 0,
-            "videos": 0
-      }
-];
+      }];
 
     const bgMusic = document.getElementById("bgMusic");
     const startExperienceBtn = document.getElementById("startExperienceBtn");
@@ -761,23 +810,37 @@
       const mediaWrap = document.createElement("div");
       mediaWrap.className = "media-wrap";
 
+      const placeholder = document.createElement("div");
+      placeholder.className = "media-placeholder";
+      placeholder.innerHTML = item.type === "image"
+        ? `<div><strong>Image ${padNumber(item.number)}</strong><span>${item.src}</span></div>`
+        : `<div><strong>Video ${padNumber(item.number)}</strong><span>${item.src}</span></div>`;
+
       if (item.type === "image") {
         const image = document.createElement("img");
-        image.src = item.src;
+        image.dataset.src = item.src;
         image.alt = `Section ${sectionNumber} image ${item.number}`;
         image.loading = "lazy";
+        image.decoding = "async";
+        image.addEventListener("load", () => {
+          figure.classList.add("media-loaded");
+        });
+        image.addEventListener("error", () => {
+          image.removeAttribute("src");
+          figure.classList.remove("media-loaded");
+        });
+        mediaWrap.appendChild(placeholder);
         mediaWrap.appendChild(image);
       } else {
         const video = document.createElement("video");
         video.controls = true;
-        video.preload = "metadata";
+        video.preload = "none";
         video.playsInline = true;
-
-        const source = document.createElement("source");
-        source.src = item.src;
-        source.type = "video/mp4";
-
-        video.appendChild(source);
+        video.dataset.src = item.src;
+        video.addEventListener("loadeddata", () => {
+          figure.classList.add("media-loaded");
+        });
+        mediaWrap.appendChild(placeholder);
         mediaWrap.appendChild(video);
       }
 
@@ -813,9 +876,15 @@
 
         const copy = document.createElement("p");
         copy.className = "section-copy";
-        copy.textContent = section.images || section.videos
-          ? `${section.images} image placeholder${section.images === 1 ? "" : "s"} and ${section.videos} video placeholder${section.videos === 1 ? "" : "s"}. Videos are automatically spread throughout this section instead of being dumped into one sad little pile.`
-          : "No media here. Just the closing title, because sometimes restraint accidentally happens.";
+        if (section.images && section.videos) {
+          copy.textContent = `${section.images} image placeholder${section.images === 1 ? "" : "s"} and ${section.videos} video placeholder${section.videos === 1 ? "" : "s"}. Videos are spread throughout this section instead of being dumped into one sad little pile.`;
+        } else if (section.images) {
+          copy.textContent = `${section.images} image placeholder${section.images === 1 ? "" : "s"}.`;
+        } else if (section.videos) {
+          copy.textContent = `${section.videos} video placeholder${section.videos === 1 ? "" : "s"}.`;
+        } else {
+          copy.textContent = "";
+        }
 
         header.appendChild(eyebrow);
         header.appendChild(title);
@@ -874,11 +943,59 @@
       requestAnimationFrame(update);
     }
 
+
+    function connectLazyMedia() {
+      const lazyItems = document.querySelectorAll("img[data-src], video[data-src]");
+
+      const loadItem = (item) => {
+        if (item.dataset.loaded === "true") return;
+        item.dataset.loaded = "true";
+
+        if (item.tagName.toLowerCase() === "img") {
+          item.src = item.dataset.src;
+        } else {
+          const source = document.createElement("source");
+          source.src = item.dataset.src;
+          source.type = "video/mp4";
+          item.appendChild(source);
+          item.load();
+        }
+      };
+
+      if (!("IntersectionObserver" in window)) {
+        lazyItems.forEach(loadItem);
+        return;
+      }
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            loadItem(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        rootMargin: "700px 0px",
+        threshold: 0.01
+      });
+
+      lazyItems.forEach((item) => observer.observe(item));
+    }
+
     function connectVideoAudioDimming() {
       const videos = document.querySelectorAll("video");
 
       videos.forEach((video) => {
         video.addEventListener("play", () => {
+          if (video.dataset.src && video.dataset.loaded !== "true") {
+            const source = document.createElement("source");
+            source.src = video.dataset.src;
+            source.type = "video/mp4";
+            video.appendChild(source);
+            video.dataset.loaded = "true";
+            video.load();
+            video.play();
+          }
           videos.forEach((otherVideo) => {
             if (otherVideo !== video) otherVideo.pause();
           });
@@ -965,6 +1082,7 @@
     }
 
     renderSections();
+    connectLazyMedia();
     connectVideoAudioDimming();
     connectRevealAnimations();
     connectForm();
