@@ -267,16 +267,21 @@
     }
 
     .memory.size-small { grid-column: span 4; }
-    .memory.size-medium { grid-column: span 6; }
-    .memory.size-wide { grid-column: span 8; }
-    .memory.size-large { grid-column: span 12; }
+    .memory.size-medium { grid-column: span 4; }
+    .memory.size-wide { grid-column: span 6; }
+    .memory.size-large { grid-column: span 6; }
     .memory.size-tall { grid-column: span 4; }
 
-    .memory.size-small .media-wrap { aspect-ratio: 4 / 3; }
-    .memory.size-medium .media-wrap { aspect-ratio: 3 / 2; }
-    .memory.size-wide .media-wrap { aspect-ratio: 16 / 9; }
-    .memory.size-large .media-wrap { aspect-ratio: 16 / 9; }
-    .memory.size-tall .media-wrap { aspect-ratio: 3 / 4; }
+    .memory.size-small .media-wrap,
+    .memory.size-medium .media-wrap,
+    .memory.size-wide .media-wrap,
+    .memory.size-large .media-wrap {
+      aspect-ratio: 4 / 3;
+    }
+
+    .memory.size-tall .media-wrap {
+      aspect-ratio: 3 / 4;
+    }
 
     .memory.rotate-left { transform: rotate(-2.2deg); }
     .memory.rotate-right { transform: rotate(2.1deg); }
@@ -322,8 +327,61 @@
       width: 100%;
       height: 100%;
       display: block;
-      object-fit: contain;
+      object-fit: cover;
       background: #120f18;
+    }
+
+    .memory.video-card {
+      outline: 2px solid rgba(255, 220, 233, 0.28);
+      outline-offset: 3px;
+    }
+
+    .memory.video-card .media-wrap::after {
+      content: "▶";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 72px;
+      height: 72px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: white;
+      font-size: 2.45rem;
+      line-height: 1;
+      padding-left: 5px;
+      background: rgba(0, 0, 0, 0.42);
+      border: 2px solid rgba(255, 255, 255, 0.72);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.36);
+      pointer-events: none;
+      z-index: 5;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.8);
+    }
+
+    .memory.video-card.is-playing .media-wrap::after {
+      opacity: 0;
+    }
+
+    .video-pill {
+      position: absolute;
+      right: 12px;
+      bottom: 12px;
+      z-index: 6;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.58);
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      color: white;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      pointer-events: none;
+      backdrop-filter: blur(4px);
+    }
+
+    .memory.video-card.is-playing .video-pill {
+      opacity: 0;
     }
 
     .memory::after {
@@ -927,27 +985,24 @@
     }
 
     function applyMediaAspectRatio(media, mediaWrap) {
-      const width = media.naturalWidth || media.videoWidth;
-      const height = media.naturalHeight || media.videoHeight;
-      if (!width || !height) return;
-
-      mediaWrap.style.aspectRatio = `${width} / ${height}`;
+      // Keep media sizes uniform across the section instead of letting one giant vertical photo bully the entire layout.
+      return;
     }
 
     function getCardClasses(index, type) {
       const sizePattern = [
-        "size-wide rotate-soft-left tape",
+        "size-medium rotate-soft-left tape",
         "size-small rotate-right push-down tape",
         "size-medium rotate-left lift-up",
         "size-tall rotate-soft-right push-down",
         "size-medium rotate-soft-left tape",
         "size-wide rotate-right",
         "size-small rotate-left tape",
-        "size-large rotate-soft-right tape"
+        "size-wide rotate-soft-right tape"
       ];
 
       const videoPattern = [
-        "size-large rotate-soft-right tape",
+        "size-wide rotate-soft-right tape",
         "size-wide rotate-soft-left tape",
         "size-medium rotate-right push-down tape"
       ];
@@ -958,7 +1013,7 @@
 
     function createMediaCard(item, index, sectionNumber) {
       const figure = document.createElement("figure");
-      figure.className = getCardClasses(index, item.type);
+      figure.className = `${getCardClasses(index, item.type)}${item.type === "video" ? " video-card" : ""}`;
 
       const mediaWrap = document.createElement("div");
       mediaWrap.className = "media-wrap";
@@ -998,8 +1053,12 @@
         video.addEventListener("loadeddata", () => {
           figure.classList.add("media-loaded");
         });
+        const videoPill = document.createElement("div");
+        videoPill.className = "video-pill";
+        videoPill.textContent = "Video";
         mediaWrap.appendChild(placeholder);
         mediaWrap.appendChild(video);
+        mediaWrap.appendChild(videoPill);
       }
 
       const caption = document.createElement("figcaption");
@@ -1149,6 +1208,8 @@
 
       videos.forEach((video) => {
         video.addEventListener("play", () => {
+          const figure = video.closest(".memory");
+          if (figure) figure.classList.add("is-playing");
           if (video.dataset.src && video.dataset.loaded !== "true") {
             const source = document.createElement("source");
             source.src = video.dataset.src;
@@ -1165,10 +1226,14 @@
         });
 
         video.addEventListener("pause", () => {
+          const figure = video.closest(".memory");
+          if (figure) figure.classList.remove("is-playing");
           if (musicStarted) fadeMusic(userVolume, 500);
         });
 
         video.addEventListener("ended", () => {
+          const figure = video.closest(".memory");
+          if (figure) figure.classList.remove("is-playing");
           if (musicStarted) fadeMusic(userVolume, 500);
         });
       });
