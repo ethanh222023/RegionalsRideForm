@@ -77,7 +77,11 @@
 
     html.scroll-unlocked,
     body.scroll-unlocked {
+      height: auto;
+      min-height: 100%;
       overflow-x: hidden;
+      overflow-y: auto;
+      touch-action: auto;
     }
 
     .begin-button {
@@ -1829,6 +1833,13 @@
       document.body.classList.remove("scroll-locked");
       document.documentElement.classList.add("scroll-unlocked");
       document.body.classList.add("scroll-unlocked");
+
+      document.documentElement.style.height = "auto";
+      document.body.style.height = "auto";
+      document.documentElement.style.overflowY = "auto";
+      document.body.style.overflowY = "auto";
+      document.documentElement.style.touchAction = "auto";
+      document.body.style.touchAction = "auto";
     }
 
     function connectBeginButton() {
@@ -1842,6 +1853,11 @@
         beginButton.classList.add("started");
         beginButton.setAttribute("aria-label", "Scroll down to the memories");
         beginButton.innerHTML = `<span>Scroll down</span><span class="scroll-arrow">↓</span>`;
+
+        beginButton.addEventListener("click", (event) => {
+          event.preventDefault();
+          memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
 
       }, { once: true });
     }
