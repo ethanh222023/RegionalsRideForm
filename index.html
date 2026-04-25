@@ -249,8 +249,8 @@
     .memory-grid {
       display: grid;
       grid-template-columns: repeat(12, 1fr);
-      gap: 22px;
-      margin-top: 28px;
+      gap: 28px;
+      margin-top: 32px;
       align-items: start;
     }
 
@@ -266,11 +266,11 @@
       transform-origin: center center;
     }
 
-    .memory.size-small { grid-column: span 4; }
-    .memory.size-medium { grid-column: span 4; }
-    .memory.size-wide { grid-column: span 6; }
-    .memory.size-large { grid-column: span 6; }
-    .memory.size-tall { grid-column: span 4; }
+    .memory.size-small { grid-column: span 6; }
+    .memory.size-medium { grid-column: span 6; }
+    .memory.size-wide { grid-column: span 8; }
+    .memory.size-large { grid-column: span 12; }
+    .memory.size-tall { grid-column: span 6; }
 
     /* Default only before the real media loads.
        Once loaded, JavaScript changes this to the actual image/video ratio
