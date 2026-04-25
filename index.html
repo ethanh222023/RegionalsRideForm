@@ -18,7 +18,7 @@
       --accent-strong: #f7c4da;
       --shadow: 0 14px 34px rgba(40, 19, 52, 0.26);
       --radius: 22px;
-      --max-width: 1100px;
+      --max-width: 1120px;
     }
 
     * {
@@ -113,6 +113,7 @@
       border-radius: 999px;
       padding: 14px 28px;
       font: inherit;
+      text-decoration: none;
       cursor: pointer;
       transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
       box-shadow: 0 12px 26px rgba(62, 27, 63, 0.22);
@@ -156,7 +157,7 @@
     .section {
       position: relative;
       padding-left: 70px;
-      margin: 0 0 60px;
+      margin: 0 0 72px;
     }
 
     .section::before {
@@ -195,7 +196,7 @@
 
     .section h2 {
       margin: 0;
-      font-size: clamp(1.7rem, 3vw, 2.6rem);
+      font-size: clamp(1.85rem, 3vw, 2.75rem);
       line-height: 1.1;
     }
 
@@ -212,71 +213,35 @@
       display: grid;
       grid-template-columns: repeat(12, 1fr);
       gap: 22px;
-      margin-top: 26px;
+      margin-top: 28px;
       align-items: start;
     }
 
     .memory {
       position: relative;
-      grid-column: span 6;
       background: rgba(255,255,255,0.07);
       border: 1px solid rgba(255,255,255,0.14);
       border-radius: 12px;
       overflow: hidden;
-      min-height: 280px;
+      min-height: 260px;
       display: flex;
       flex-direction: column;
       box-shadow: 0 16px 28px rgba(33, 16, 44, 0.24);
       transform-origin: center center;
     }
 
-    .memory.large {
-      grid-column: span 12;
-    }
+    .memory.size-small { grid-column: span 4; min-height: 220px; }
+    .memory.size-medium { grid-column: span 6; min-height: 300px; }
+    .memory.size-wide { grid-column: span 8; min-height: 330px; }
+    .memory.size-large { grid-column: span 12; min-height: 410px; }
+    .memory.size-tall { grid-column: span 4; min-height: 430px; }
 
-    .memory.tall {
-      min-height: 420px;
-    }
-
-    .memory.small {
-      min-height: 220px;
-    }
-
-    .memory.medium {
-      min-height: 320px;
-    }
-
-    .memory.wide {
-      grid-column: span 8;
-    }
-
-    .memory.narrow {
-      grid-column: span 4;
-    }
-
-    .memory.rotate-left {
-      transform: rotate(-2.2deg);
-    }
-
-    .memory.rotate-right {
-      transform: rotate(2.1deg);
-    }
-
-    .memory.rotate-soft-left {
-      transform: rotate(-1deg);
-    }
-
-    .memory.rotate-soft-right {
-      transform: rotate(1.1deg);
-    }
-
-    .memory.lift-up {
-      margin-top: -18px;
-    }
-
-    .memory.push-down {
-      margin-top: 18px;
-    }
+    .memory.rotate-left { transform: rotate(-2.2deg); }
+    .memory.rotate-right { transform: rotate(2.1deg); }
+    .memory.rotate-soft-left { transform: rotate(-1deg); }
+    .memory.rotate-soft-right { transform: rotate(1.1deg); }
+    .memory.lift-up { margin-top: -18px; }
+    .memory.push-down { margin-top: 18px; }
 
     .memory.tape::before,
     .memory.tape::after {
@@ -305,7 +270,7 @@
     .media-wrap {
       position: relative;
       flex: 1;
-      min-height: 240px;
+      min-height: 220px;
       background: rgba(18, 13, 24, 0.55);
     }
 
@@ -336,6 +301,26 @@
       font-style: italic;
       position: relative;
       z-index: 4;
+    }
+
+    .empty-ending {
+      min-height: 260px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 1px dashed rgba(255,255,255,0.22);
+      border-radius: 18px;
+      background: rgba(255,255,255,0.07);
+      margin-top: 24px;
+      padding: 28px;
+    }
+
+    .empty-ending p {
+      max-width: 620px;
+      color: var(--muted);
+      line-height: 1.75;
+      margin: 0;
+      font-size: 1.05rem;
     }
 
     .quote-break {
@@ -486,9 +471,11 @@
       }
 
       .memory,
-      .memory.large,
-      .memory.wide,
-      .memory.narrow {
+      .memory.size-small,
+      .memory.size-medium,
+      .memory.size-wide,
+      .memory.size-large,
+      .memory.size-tall {
         grid-column: span 12;
         transform: none;
         margin-top: 0;
@@ -518,30 +505,25 @@
     ============================
     ASSET PLACEMENT GUIDE
     ============================
-    Put your files in these folders in your GitHub repo:
 
+    Background music:
     /assets/music/background-song.mp3
+
+    Hero image:
     /assets/photos/hero.jpg
-    /assets/photos/memory1.jpg
-    /assets/photos/memory2.jpg
-    /assets/photos/memory3.jpg
-    /assets/photos/memory4.jpg
-    /assets/photos/memory5.jpg
-    /assets/photos/memory6.jpg
-    /assets/photos/memory7.jpg
-    /assets/photos/memory8.jpg
-    /assets/videos/memory-video-1.mp4
-    /assets/videos/memory-video-2.mp4
 
-    You can add more photos/videos by copying one of the existing .memory blocks.
+    Placeholder section folders:
+    /assets/section01/images/image001.jpg ... image070.jpg
+    /assets/section01/videos/video001.mp4 ... video013.mp4
 
-    ============================
-    FORM SUBMISSION GUIDE
-    ============================
-    Replace the FORM_ENDPOINT value in the script near the bottom with:
-    1) your Google Apps Script web app URL, or
-    2) a Formspree endpoint, or
-    3) any backend endpoint you create
+    /assets/section02/images/image001.jpg ... image020.jpg
+    /assets/section02/videos/video001.mp4 ... video003.mp4
+
+    Continue this pattern through section11.
+    Section12 intentionally has no media.
+
+    When you send me your actual folders, I can replace these generated placeholder names
+    with the real file names. Because apparently the camera roll has become a national archive.
   -->
 
   <audio id="bgMusic" loop preload="auto">
@@ -552,163 +534,24 @@
     <div class="hero-card reveal visible">
       <h1>Our Year in Memories</h1>
       <p>
-        A quiet little archive of the moments that somehow became everything.
-        The big ones. The dumb ones. The blurry ones. The ones worth keeping.
+        A messy, sentimental archive of Burn this year. The tournaments, the houses,
+        the vans, the naps, the side quests, and every ridiculous thing we somehow made important.
       </p>
       <div class="hero-actions">
-        <button class="btn btn-primary" id="startExperienceBtn" type="button">Begin</button>
+        <a class="btn btn-primary" id="startExperienceBtn" href="#memories">Begin</a>
       </div>
       <div class="music-note">Best experienced with sound on.</div>
     </div>
   </header>
 
   <main>
-    <section id="memories" class="timeline">
-      <article class="section reveal">
-        <div class="section-card">
-          <div class="section-header">
-            <div class="eyebrow">Chapter One</div>
-            <h2>The Start of It</h2>
-            <p class="section-copy">
-              Use this first section for earlier moments from the year. Opening scenes matter.
-              Pretend you understand pacing better than most humans with a camera roll.
-            </p>
-          </div>
-
-          <div class="memory-grid">
-            <figure class="memory tall wide rotate-soft-left tape">
-              <div class="media-wrap">
-                <img src="assets/photos/hero.jpg" alt="Opening memory" />
-              </div>
-              <figcaption class="caption">Replace this with your opening photo and a short caption.</figcaption>
-            </figure>
-
-            <figure class="memory narrow medium rotate-right push-down tape">
-              <div class="media-wrap">
-                <img src="assets/photos/memory1.jpg" alt="Memory 1" />
-              </div>
-              <figcaption class="caption">A quiet moment, a dumb moment, or something unexpectedly important.</figcaption>
-            </figure>
-
-            <figure class="memory narrow small rotate-soft-left lift-up">
-              <div class="media-wrap">
-                <img src="assets/photos/memory2.jpg" alt="Memory 2" />
-              </div>
-              <figcaption class="caption">Keep captions short. One line usually hits harder than an essay.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </article>
-
-      <article class="section reveal">
-        <div class="section-card">
-          <div class="section-header">
-            <div class="eyebrow">Chapter Two</div>
-            <h2>The Chaos in the Middle</h2>
-            <p class="section-copy">
-              This is the section for road trips, random screenshots, bad lighting, and the kind of memories
-              that become better with time because your standards finally lowered.
-            </p>
-          </div>
-
-          <div class="memory-grid">
-            <figure class="memory large rotate-soft-right tape">
-              <div class="media-wrap">
-                <video controls preload="metadata" playsinline>
-                  <source src="assets/videos/memory-video-1.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <figcaption class="caption">Drop in a video here. Background music will dim while it plays.</figcaption>
-            </figure>
-
-            <figure class="memory wide medium rotate-left lift-up">
-              <div class="media-wrap">
-                <img src="assets/photos/memory3.jpg" alt="Memory 3" />
-              </div>
-              <figcaption class="caption">This is a good spot for a candid or funny image.</figcaption>
-            </figure>
-
-            <figure class="memory narrow tall rotate-soft-right push-down tape">
-              <div class="media-wrap">
-                <img src="assets/photos/memory4.jpg" alt="Memory 4" />
-              </div>
-              <figcaption class="caption">Use a caption that sounds human, not like a museum plaque.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </article>
-
-      <article class="section reveal">
-        <div class="section-card">
-          <div class="section-header">
-            <div class="eyebrow">Chapter Three</div>
-            <h2>The Moments That Stayed</h2>
-            <p class="section-copy">
-              This section should feel heavier. Put the photos here that make people stop scrolling for a second.
-            </p>
-          </div>
-
-          <div class="memory-grid">
-            <figure class="memory narrow medium rotate-soft-left tape">
-              <div class="media-wrap">
-                <img src="assets/photos/memory5.jpg" alt="Memory 5" />
-              </div>
-              <figcaption class="caption">Something that mattered more than anyone realized at the time.</figcaption>
-            </figure>
-
-            <figure class="memory wide tall rotate-right push-down">
-              <div class="media-wrap">
-                <img src="assets/photos/memory6.jpg" alt="Memory 6" />
-              </div>
-              <figcaption class="caption">A caption like “we didn’t know this would matter so much” works well here.</figcaption>
-            </figure>
-
-            <figure class="memory large rotate-soft-left tape">
-              <div class="media-wrap">
-                <video controls preload="metadata" playsinline>
-                  <source src="assets/videos/memory-video-2.mp4" type="video/mp4" />
-                </video>
-              </div>
-              <figcaption class="caption">Another video slot for a louder or more emotional memory.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </article>
-
-      <article class="section reveal">
-        <div class="section-card">
-          <div class="section-header">
-            <div class="eyebrow">Chapter Four</div>
-            <h2>Everything We Almost Forgot</h2>
-            <p class="section-copy">
-              End with the small stuff. Screenshots, blurry photos, tiny moments. Those are the ones that quietly destroy people.
-            </p>
-          </div>
-
-          <div class="memory-grid">
-            <figure class="memory wide medium rotate-left tape">
-              <div class="media-wrap">
-                <img src="assets/photos/memory7.jpg" alt="Memory 7" />
-              </div>
-              <figcaption class="caption">A tiny memory that somehow says everything.</figcaption>
-            </figure>
-
-            <figure class="memory narrow tall rotate-soft-right push-down">
-              <div class="media-wrap">
-                <img src="assets/photos/memory8.jpg" alt="Memory 8" />
-              </div>
-              <figcaption class="caption">End soft. Don’t over-explain it.</figcaption>
-            </figure>
-          </div>
-        </div>
-      </article>
-    </section>
+    <section id="memories" class="timeline"></section>
 
     <section class="quote-break reveal">
       <blockquote>
         “It didn’t feel important when it was happening. That’s why we had to save it.”
       </blockquote>
-      <span>replace this line if you want</span>
+      <span>Burn 25-26</span>
     </section>
 
     <section class="reflection reveal">
@@ -766,23 +609,238 @@
   </main>
 
   <footer class="footer reveal">
-    Made with memories, bad timing, and an unreasonable attachment to a camera roll.
+    Thanks, Burn. We all made this year so great.
   </footer>
 
   <script>
     const FORM_ENDPOINT = "PASTE_YOUR_FORM_ENDPOINT_HERE";
 
+    const sections = [
+      {
+            "title": "We've had fun this year, huh",
+            "folder": "section01",
+            "images": 70,
+            "videos": 13
+      },
+      {
+            "title": "Downtown has generated a whole bunch of stories",
+            "folder": "section02",
+            "images": 20,
+            "videos": 3
+      },
+      {
+            "title": "Scav Hunt was a blast",
+            "folder": "section03",
+            "images": 36,
+            "videos": 10
+      },
+      {
+            "title": "Uh, yeah. Burn does pods",
+            "folder": "section04",
+            "images": 21,
+            "videos": 0
+      },
+      {
+            "title": "We sure love to sleep...",
+            "folder": "section05",
+            "images": 10,
+            "videos": 2
+      },
+      {
+            "title": "We like to cheeks too :)",
+            "folder": "section06",
+            "images": 7,
+            "videos": 2
+      },
+      {
+            "title": "We had some crazy side quests at tournaments too",
+            "folder": "section07",
+            "images": 70,
+            "videos": 16
+      },
+      {
+            "title": "Those Florida Vans were crazy fun",
+            "folder": "section08",
+            "images": 13,
+            "videos": 7
+      },
+      {
+            "title": "Our home base is D2 always",
+            "folder": "section09",
+            "images": 18,
+            "videos": 1
+      },
+      {
+            "title": "Memories made, friends forever in our houses",
+            "folder": "section10",
+            "images": 141,
+            "videos": 31
+      },
+      {
+            "title": "But, Burn wouldn't be Burn without the Piyush selfies ;)",
+            "folder": "section11",
+            "images": 4,
+            "videos": 0
+      },
+      {
+            "title": "Thanks, Burn. We all made this year so great",
+            "folder": "section12",
+            "images": 0,
+            "videos": 0
+      }
+];
+
     const bgMusic = document.getElementById("bgMusic");
     const startExperienceBtn = document.getElementById("startExperienceBtn");
     const memoriesSection = document.getElementById("memories");
-    const videos = document.querySelectorAll("video");
-    const revealItems = document.querySelectorAll(".reveal");
     const form = document.getElementById("memoryForm");
     const formStatus = document.getElementById("formStatus");
 
     let musicStarted = false;
     const userVolume = 0.65;
     bgMusic.volume = userVolume;
+
+    function padNumber(number) {
+      return String(number).padStart(3, "0");
+    }
+
+    function buildDistributedMedia(section) {
+      const images = Array.from({ length: section.images }, (_, index) => ({
+        type: "image",
+        number: index + 1,
+        src: `assets/${section.folder}/images/image${padNumber(index + 1)}.jpg`
+      }));
+
+      const videos = Array.from({ length: section.videos }, (_, index) => ({
+        type: "video",
+        number: index + 1,
+        src: `assets/${section.folder}/videos/video${padNumber(index + 1)}.mp4`
+      }));
+
+      if (videos.length === 0) return images;
+      if (images.length === 0) return videos;
+
+      const result = [...images];
+      videos.forEach((video, index) => {
+        const insertAt = Math.min(
+          result.length,
+          Math.floor(((index + 1) * result.length) / (videos.length + 1)) + index
+        );
+        result.splice(insertAt, 0, video);
+      });
+
+      return result;
+    }
+
+    function getCardClasses(index, type) {
+      const sizePattern = [
+        "size-wide rotate-soft-left tape",
+        "size-small rotate-right push-down tape",
+        "size-medium rotate-left lift-up",
+        "size-tall rotate-soft-right push-down",
+        "size-medium rotate-soft-left tape",
+        "size-wide rotate-right",
+        "size-small rotate-left tape",
+        "size-large rotate-soft-right tape"
+      ];
+
+      const videoPattern = [
+        "size-large rotate-soft-right tape",
+        "size-wide rotate-soft-left tape",
+        "size-medium rotate-right push-down tape"
+      ];
+
+      const pattern = type === "video" ? videoPattern : sizePattern;
+      return `memory ${pattern[index % pattern.length]}`;
+    }
+
+    function createMediaCard(item, index, sectionNumber) {
+      const figure = document.createElement("figure");
+      figure.className = getCardClasses(index, item.type);
+
+      const mediaWrap = document.createElement("div");
+      mediaWrap.className = "media-wrap";
+
+      if (item.type === "image") {
+        const image = document.createElement("img");
+        image.src = item.src;
+        image.alt = `Section ${sectionNumber} image ${item.number}`;
+        image.loading = "lazy";
+        mediaWrap.appendChild(image);
+      } else {
+        const video = document.createElement("video");
+        video.controls = true;
+        video.preload = "metadata";
+        video.playsInline = true;
+
+        const source = document.createElement("source");
+        source.src = item.src;
+        source.type = "video/mp4";
+
+        video.appendChild(source);
+        mediaWrap.appendChild(video);
+      }
+
+      const caption = document.createElement("figcaption");
+      caption.className = "caption";
+      caption.textContent = item.type === "image"
+        ? `Placeholder image ${padNumber(item.number)}`
+        : `Placeholder video ${padNumber(item.number)}`;
+
+      figure.appendChild(mediaWrap);
+      figure.appendChild(caption);
+      return figure;
+    }
+
+    function renderSections() {
+      sections.forEach((section, index) => {
+        const sectionNumber = index + 1;
+        const article = document.createElement("article");
+        article.className = "section reveal";
+
+        const card = document.createElement("div");
+        card.className = "section-card";
+
+        const header = document.createElement("div");
+        header.className = "section-header";
+
+        const eyebrow = document.createElement("div");
+        eyebrow.className = "eyebrow";
+        eyebrow.textContent = `Section ${sectionNumber}`;
+
+        const title = document.createElement("h2");
+        title.textContent = section.title;
+
+        const copy = document.createElement("p");
+        copy.className = "section-copy";
+        copy.textContent = section.images || section.videos
+          ? `${section.images} image placeholder${section.images === 1 ? "" : "s"} and ${section.videos} video placeholder${section.videos === 1 ? "" : "s"}. Videos are automatically spread throughout this section instead of being dumped into one sad little pile.`
+          : "No media here. Just the closing title, because sometimes restraint accidentally happens.";
+
+        header.appendChild(eyebrow);
+        header.appendChild(title);
+        header.appendChild(copy);
+        card.appendChild(header);
+
+        if (section.images || section.videos) {
+          const grid = document.createElement("div");
+          grid.className = "memory-grid";
+          const mediaItems = buildDistributedMedia(section);
+          mediaItems.forEach((item, mediaIndex) => {
+            grid.appendChild(createMediaCard(item, mediaIndex, sectionNumber));
+          });
+          card.appendChild(grid);
+        } else {
+          const ending = document.createElement("div");
+          ending.className = "empty-ending";
+          ending.innerHTML = "<p>Thanks for the year. Thanks for the memories. Thanks for somehow making all of this worth saving.</p>";
+          card.appendChild(ending);
+        }
+
+        article.appendChild(card);
+        memoriesSection.appendChild(article);
+      });
+    }
 
     async function startMusic() {
       if (musicStarted) return;
@@ -794,17 +852,13 @@
       }
     }
 
-    async function goToMemories() {
+    async function goToMemories(event) {
+      if (event) event.preventDefault();
       await startMusic();
       if (memoriesSection) {
         memoriesSection.scrollIntoView({ behavior: "smooth", block: "start" });
       }
     }
-
-    startExperienceBtn.addEventListener("click", function (event) {
-      event.preventDefault();
-      goToMemories();
-    });
 
     function fadeMusic(targetVolume, duration = 400) {
       const startVolume = bgMusic.volume;
@@ -820,73 +874,82 @@
       requestAnimationFrame(update);
     }
 
-    videos.forEach((video) => {
-      video.addEventListener("play", () => {
-        videos.forEach((otherVideo) => {
-          if (otherVideo !== video) otherVideo.pause();
-        });
-        if (musicStarted) fadeMusic(0.16, 350);
-      });
+    function connectVideoAudioDimming() {
+      const videos = document.querySelectorAll("video");
 
-      video.addEventListener("pause", () => {
-        if (musicStarted) fadeMusic(userVolume, 500);
-      });
-
-      video.addEventListener("ended", () => {
-        if (musicStarted) fadeMusic(userVolume, 500);
-      });
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.15 });
-
-    revealItems.forEach((item) => {
-      if (!item.classList.contains("visible")) observer.observe(item);
-    });
-
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
-      formStatus.textContent = "Saving your answers...";
-
-      const formData = new FormData(form);
-      const payload = Object.fromEntries(formData.entries());
-      payload.timestamp = new Date().toISOString();
-
-      if (!FORM_ENDPOINT || FORM_ENDPOINT === "PASTE_YOUR_FORM_ENDPOINT_HERE") {
-        localStorage.setItem("memoryFormDraft", JSON.stringify(payload));
-        formStatus.textContent = "Form endpoint not set yet. Answers were saved in this browser only.";
-        return;
-      }
-
-      try {
-        const response = await fetch(FORM_ENDPOINT, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(payload)
+      videos.forEach((video) => {
+        video.addEventListener("play", () => {
+          videos.forEach((otherVideo) => {
+            if (otherVideo !== video) otherVideo.pause();
+          });
+          if (musicStarted) fadeMusic(0.16, 350);
         });
 
-        if (!response.ok) {
-          throw new Error("Submission failed");
+        video.addEventListener("pause", () => {
+          if (musicStarted) fadeMusic(userVolume, 500);
+        });
+
+        video.addEventListener("ended", () => {
+          if (musicStarted) fadeMusic(userVolume, 500);
+        });
+      });
+    }
+
+    function connectRevealAnimations() {
+      const revealItems = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("visible");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+
+      revealItems.forEach((item) => {
+        if (!item.classList.contains("visible")) observer.observe(item);
+      });
+    }
+
+    function connectForm() {
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        formStatus.textContent = "Saving your answers...";
+
+        const formData = new FormData(form);
+        const payload = Object.fromEntries(formData.entries());
+        payload.timestamp = new Date().toISOString();
+
+        if (!FORM_ENDPOINT || FORM_ENDPOINT === "PASTE_YOUR_FORM_ENDPOINT_HERE") {
+          localStorage.setItem("memoryFormDraft", JSON.stringify(payload));
+          formStatus.textContent = "Form endpoint not set yet. Answers were saved in this browser only.";
+          return;
         }
 
-        formStatus.textContent = "Your answers were saved.";
-        form.reset();
-      } catch (error) {
-        console.error(error);
-        formStatus.textContent = "Could not submit right now. Your answers were not lost, they were saved locally in this browser.";
-        localStorage.setItem("memoryFormDraft", JSON.stringify(payload));
-      }
-    });
+        try {
+          const response = await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(payload)
+          });
 
-    window.addEventListener("load", () => {
+          if (!response.ok) {
+            throw new Error("Submission failed");
+          }
+
+          formStatus.textContent = "Your answers were saved.";
+          form.reset();
+        } catch (error) {
+          console.error(error);
+          formStatus.textContent = "Could not submit right now. Your answers were not lost, they were saved locally in this browser.";
+          localStorage.setItem("memoryFormDraft", JSON.stringify(payload));
+        }
+      });
+    }
+
+    function restoreSavedDraft() {
       const savedDraft = localStorage.getItem("memoryFormDraft");
       if (!savedDraft) return;
 
@@ -899,7 +962,15 @@
       } catch (error) {
         console.log("No usable saved draft found.");
       }
-    });
+    }
+
+    renderSections();
+    connectVideoAudioDimming();
+    connectRevealAnimations();
+    connectForm();
+    restoreSavedDraft();
+
+    startExperienceBtn.addEventListener("click", goToMemories);
   </script>
 </body>
 </html>
