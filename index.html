@@ -908,14 +908,14 @@
             <legend>4. Preferred pickup area <span class="optional-note">Optional</span></legend>
             <p class="field-help">Optional. Leave blank if you do not care where pickup happens.</p>
             <div class="choice-grid choice-grid-wide">
-              <label class="choice-option"><input type="radio" name="pickup_location" value="D2" /> <span>D2</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="Squires" /> <span>Squires</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="Drillfield" /> <span>Drillfield</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="Foxridge" /> <span>Foxridge</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="The Edge" /> <span>The Edge</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="Downtown Blacksburg" /> <span>Downtown Blacksburg</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="CRC" /> <span>CRC</span></label>
-              <label class="choice-option"><input type="radio" name="pickup_location" value="Other" /> <span>Other</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="D2" /> <span>D2</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Squires" /> <span>Squires</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Drillfield" /> <span>Drillfield</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Foxridge" /> <span>Foxridge</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="The Edge" /> <span>The Edge</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Downtown Blacksburg" /> <span>Downtown Blacksburg</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="CRC" /> <span>CRC</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Other" /> <span>Other</span></label>
             </div>
           </fieldset>
 
@@ -1993,6 +1993,24 @@
       document.body.style.overflowX = "hidden";
     }
 
+    function connectPickupLocationToggle() {
+      const pickupChoices = document.querySelectorAll('input[name="pickup_location"]');
+      if (!pickupChoices.length) return;
+
+      pickupChoices.forEach((choice) => {
+        choice.addEventListener("change", () => {
+          if (!choice.checked) return;
+
+          pickupChoices.forEach((otherChoice) => {
+            if (otherChoice !== choice) {
+              otherChoice.checked = false;
+            }
+          });
+        });
+      });
+    }
+
+
     function connectBeginButton() {
       const beginButton = document.getElementById("beginButton");
       if (!beginButton) return;
@@ -2038,6 +2056,7 @@
   connectRevealAnimations();
   connectForm();
   restoreSavedDraft();
+  connectPickupLocationToggle();
   connectBeginButton();
   connectSkipFormButton();
 
