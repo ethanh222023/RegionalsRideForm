@@ -871,11 +871,10 @@
 
     <section class="reflection reveal">
       <div class="reflection-card">
-        <div class="eyebrow">Reflection</div>
+        <div class="eyebrow">Submission</div>
         <h2>Ride Form</h2>
         <p>
-          Fill this out so rides can be organized without turning the group chat into a burning pile of logistics.
-          Questions 1, 2, and 3 are required. Questions 4 and 5 are optional.
+          Please fill this out. Hit the submit button on the bottom once all of your results are in.
         </p>
 
         <form id="memoryForm">
@@ -885,42 +884,42 @@
           </div>
 
           <fieldset class="field choice-field">
-            <legend>2. Do you need a ride? <span class="required-note">Required</span></legend>
+            <legend>2. Can you drive? <span class="required-note">Required</span></legend>
             <div class="choice-grid">
-              <label class="choice-option"><input type="radio" name="ride_needed" value="Yes, I need a ride" required /> <span>Yes, I need a ride</span></label>
-              <label class="choice-option"><input type="radio" name="ride_needed" value="No, I do not need a ride" /> <span>No, I do not need a ride</span></label>
-              <label class="choice-option"><input type="radio" name="ride_needed" value="Not sure yet" /> <span>Not sure yet</span></label>
+              <label class="choice-option"><input type="radio" name="ride_needed" value="Yes" required /> <span>Yese</span></label>
+              <label class="choice-option"><input type="radio" name="ride_needed" value="No" /> <span>No</span></label>
+              <label class="choice-option"><input type="radio" name="ride_needed" value="Yes, but arrive late/missing a day" /> <span>Yes, but arrive late/missing a day</span></label>
             </div>
           </fieldset>
 
           <fieldset class="field choice-field">
-            <legend>3. How many seats do you need? <span class="required-note">Required</span></legend>
+            <legend>3. What time can you leave Friday? <span class="required-note">Required</span></legend>
             <div class="choice-grid">
-              <label class="choice-option"><input type="radio" name="seat_count" value="0 seats" required /> <span>0 seats</span></label>
-              <label class="choice-option"><input type="radio" name="seat_count" value="1 seat" /> <span>1 seat</span></label>
-              <label class="choice-option"><input type="radio" name="seat_count" value="2 seats" /> <span>2 seats</span></label>
-              <label class="choice-option"><input type="radio" name="seat_count" value="3 seats" /> <span>3 seats</span></label>
-              <label class="choice-option"><input type="radio" name="seat_count" value="4+ seats" /> <span>4+ seats</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="2-4" required /> <span>2-4s</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="4-6" /> <span>4-6</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="6-8" /> <span>6-8</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="8+" /> <span>8+</span></label>
+              <label class="choice-option"><input type="radio" name="seat_count" value="Whenever" /> <span>Whenever</span></label>
             </div>
           </fieldset>
 
           <fieldset class="field choice-field optional-field">
-            <legend>4. Preferred pickup area <span class="optional-note">Optional</span></legend>
-            <p class="field-help">Optional. Leave blank if you do not care where pickup happens.</p>
+            <legend>4. If you can drive, what is the maximum amount of people other than you that you can take? <span class="optional-note">Optional</span></legend>
+            <p class="field-help">Optional. Leave blank if you can not drive</p>
             <div class="choice-grid choice-grid-wide">
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="D2" /> <span>D2</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Squires" /> <span>Squires</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Drillfield" /> <span>Drillfield</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Foxridge" /> <span>Foxridge</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="The Edge" /> <span>The Edge</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Downtown Blacksburg" /> <span>Downtown Blacksburg</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="CRC" /> <span>CRC</span></label>
-              <label class="choice-option"><input type="checkbox" name="pickup_location" value="Other" /> <span>Other</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="0" /> <span>0</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="1" /> <span>1</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="2" /> <span>2</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="3" /> <span>3</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="4" /> <span>4</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="5" /> <span>5</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="6" /> <span>6</span></label>
+              <label class="choice-option"><input type="checkbox" name="pickup_location" value="7" /> <span>7</span></label>
             </div>
           </fieldset>
 
           <div class="field optional-field">
-            <label for="extra_notes">5. Anything else we should know? <span class="optional-note">Optional</span></label>
+            <label for="extra_notes">5. Any other statements about rides? This includes whether you will be missing a day/arriving late or early, or driving yourself <span class="optional-note">Optional</span></label>
             <textarea id="extra_notes" name="extra_notes" placeholder="Optional. Add any extra ride details here."></textarea>
           </div>
 
